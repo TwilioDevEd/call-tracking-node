@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  div.row
+    div.col-lg-4
+      table.table
+        thead
+          tr
+            th Phone number
+            th State
+            th
+        tbody
+          each number in availableNumbers
+            tr
+              td= number.friendlyName
+              td= number.region
+              td
+                href.btn.btn-xs.btn-default= 'Purchase'

@@ -1,4 +1,12 @@
+var dotenv = require('dotenv');
 var cfg = {};
+
+if(process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
+    dotenv.config({path: '.env'});
+}
+else {
+    dotenv.config({path: '.env.test'});
+}
 
 // HTTP Port to run our web application
 cfg.port = process.env.PORT || 3000;
@@ -21,19 +29,21 @@ cfg.secret = process.env.APP_SECRET || 'keyboard cat';
 // you could hard code these values here as strings.
 cfg.accountSid = process.env.TWILIO_ACCOUNT_SID;
 cfg.authToken = process.env.TWILIO_AUTH_TOKEN;
-
-// A Twilio number you control - choose one from:
-// https://www.twilio.com/user/account/phone-numbers/incoming
-// Specify in E.164 format, e.g. "+16519998877"
-cfg.twilioNumber = process.env.TWILIO_NUMBER;
-
-// Your own mobile phone number! The app may be calling and texting you to
-// test things out. Specify in E.164 format, e.g. "+16519998877"
-cfg.myNumber = process.env.MY_NUMBER;
+cfg.appSid = process.env.TWILIO_APP_SID;
 
 // MongoDB connection string - MONGO_URL is for local dev,
 // MONGOLAB_URI is for the MongoLab add-on for Heroku deployment
-cfg.mongoUrl = process.env.MONGOLAB_URI || process.env.MONGO_URL
+cfg.mongoUrl = process.env.MONGOLAB_URI || process.env.MONGO_URL;
+
+var configured = [cfg.accountSid, cfg.authToken, cfg.mongoUrl].every(function(configValue) {
+    if(configValue) {
+        return true;
+    }
+});
+
+if(!configured) {
+    throw new Error('TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, and MONGO_URL must be set');
+}
 
 // Export configuration object
 module.exports = cfg;
