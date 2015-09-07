@@ -20,8 +20,6 @@ html(lang='en')
     // Twitter Bootstrap included for some basic styling
     link(rel='stylesheet', 
       href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
-    link(rel='stylesheet', 
-      href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css')
 
     // HTML 5 shims for older IE
     <!--[if lt IE 9]>
@@ -40,6 +38,10 @@ html(lang='en')
       .container
         .navbar-header
           a.navbar-brand(href='/dashboard') Call tracking
+        div.collapse.navbar-collapse
+            ul.nav.navbar-nav
+                li
+                    a(href='/available-numbers') Available numbers
 
     //- Include page content
     #main.container

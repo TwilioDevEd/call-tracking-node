@@ -15,6 +15,6 @@ block content
               td= number.friendlyName
               td= number.region
               td
-                form(name='purchaseNumber', action='/phone-number', method='POST')
+                form(name='purchaseNumber', action='/lead-source', method='POST')
                     input(type='hidden', name='phoneNumber', value="#{number.phone_number}")
                     input(type='submit', value='Purchase').btn.btn-xs.btn-default
