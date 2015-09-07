@@ -28,7 +28,8 @@ var newLeadSource = function(request, response) {
 
     client.incomingPhoneNumbers.create({
         phoneNumber: phoneNumberToPurchase,
-        voiceCallerIdLookup: true
+        voiceCallerIdLookup: true,
+        voiceApplicationSid: cfg.appSid
     })
         .then(function(purchasedNumber) {
             var leadSource = new LeadSource({number: phoneNumberToPurchase});

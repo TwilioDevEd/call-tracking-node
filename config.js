@@ -1,4 +1,5 @@
 var dotenv = require('dotenv');
+var twimlApp = require('./util/twimlApp');
 var cfg = {};
 
 if(process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
@@ -29,6 +30,13 @@ cfg.secret = process.env.APP_SECRET || 'keyboard cat';
 // you could hard code these values here as strings.
 cfg.accountSid = process.env.TWILIO_ACCOUNT_SID;
 cfg.authToken = process.env.TWILIO_AUTH_TOKEN;
+
+twimlApp.getTwimlAppSid('Call tracking app').then(function(appSid) {
+    console.log('Working with TwiML App SID: ');
+    console.log(appSid);
+    process.env.TWILIO_APP_SID = appSid;
+});
+
 cfg.appSid = process.env.TWILIO_APP_SID;
 
 // MongoDB connection string - MONGO_URL is for local dev,
@@ -44,6 +52,7 @@ var configured = [cfg.accountSid, cfg.authToken, cfg.mongoUrl].every(function(co
 if(!configured) {
     throw new Error('TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, and MONGO_URL must be set');
 }
+
 
 // Export configuration object
 module.exports = cfg;
