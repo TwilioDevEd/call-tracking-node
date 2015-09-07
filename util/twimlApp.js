@@ -18,7 +18,6 @@ var getTwimlAppSid = function(appNameToFind) {
                 throw new Error('No such app');
             }
             else {
-                process.env.TWILIO_APP_SID = results.applications[0].sid;
                 return results.applications[0].sid;
             }
         })
@@ -28,10 +27,9 @@ var getTwimlAppSid = function(appNameToFind) {
                 voiceCallerIdLookup: true
             })
                 .then(function(newApp) {
-                    process.env.TWILIO_APP_SID = newApp.sid;
                     return newApp.sid;
                 });
         });
 };
 
-exports.twimlApp = getTwimlAppSid;
+exports.getTwimlAppSid = getTwimlAppSid;
