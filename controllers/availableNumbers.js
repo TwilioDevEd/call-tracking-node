@@ -8,34 +8,35 @@ var indexAvailableNumbers = function(request, response) {
     var areaCode = request.query.areaCode;
 
     client.availablePhoneNumbers('US').local.list({'areaCode': areaCode})
-    .then(function(availableNumbers) {
-        response.render(
-            'availableNumbers',
-            {'availableNumbers': availableNumbers.availablePhoneNumbers}
-        );
-    });
+        .then(function(availableNumbers) {
+            response.render(
+                'availableNumbers',
+                {'availableNumbers': availableNumbers.availablePhoneNumbers}
+            );
+        });
 };
 
 var purchasePhoneNumber = function(request, response) {
-    var phoneNumberToPurchase = request.query.phoneNumber;
+    var phoneNumberToPurchase = request.body.phoneNumber;
     client = twilio(config.accountSid, config.authToken);
 
     client.incomingPhoneNumbers.create({
-        phoneNumber: phoneNumberToPurchase
+        phoneNumber: phoneNumberToPurchase,
+        voiceCallerIdLookup: true
     })
-    .then(function(purchasedNumber) {
-        var leadSource = new LeadSource({number: purchasedNumber});
-        return leadSource.save();
-    })
-    .then(function(savedLeadSource) {
-        console.log(savedLeadSource);
-    })
-    .fail(function(numberPurchaseFailure) {
-        console.log(numberPurchaseFailure);
-    });
+        .then(function(purchasedNumber) {
+            var leadSource = new LeadSource({number: purchasedNumber.phone_number});
+            return leadSource.save();
+        })
+        .then(function(savedLeadSource) {
+            console.log(savedLeadSource);
+        })
+        .fail(function(numberPurchaseFailure) {
+            console.log(numberPurchaseFailure);
+        });
 };
 
-var createLeadSource = function(request, response) {
+var editLeadSource = function(request, response) {
 };
 
 exports.index = indexAvailableNumbers;
