@@ -29,7 +29,7 @@ var newLeadSource = function(request, response) {
     client.incomingPhoneNumbers.create({
         phoneNumber: phoneNumberToPurchase,
         voiceCallerIdLookup: true,
-        voiceApplicationSid: cfg.appSid
+        voiceApplicationSid: config.appSid
     })
         .then(function(purchasedNumber) {
             var leadSource = new LeadSource({number: phoneNumberToPurchase});
@@ -49,14 +49,31 @@ var newLeadSource = function(request, response) {
 
 var editLeadSource = function(request, response) {
     var leadSourceId = request.params.id;
-    response.render(
-        'editLeadSource',
-        {'leadSourceId': leadSourceId,
-         'leadSourcePhoneNumber': '+43242353454'}
-    );
+    LeadSource.findOne({ _id: leadSourceId })
+        .then(function(foundLeadSource) {
+            response.render(
+                'editLeadSource',
+                { leadSourceId: foundLeadSource._id,
+                  leadSourcePhoneNumber: foundLeadSource.number }
+            );
+        });
 };
 
 var updateLeadSource = function(request, response) {
+    var leadSourceId = request.params.id;
+    LeadSource.findOne({_id: leadSourceId})
+        .then(function(foundLeadSource) {
+            foundLeadSource.description = request.body.description;
+            foundLeadSource.forwardingNumber = request.body.forwardingNumber;
+
+            return foundLeadSource.save();
+        })
+        .then(function(savedLeadSource) {
+            // Saved successfuly. Redirect
+        })
+        .fail(function(error) {
+            // Failed to save. Do something
+        });
 
 };
 
