@@ -14,7 +14,7 @@ var indexAvailableNumbers = function(request, response) {
                 {'availableNumbers': availableNumbers.availablePhoneNumbers}
             );
         })
-        .fail(function(failureToFetchNumbers) {
+        .catch(function(failureToFetchNumbers) {
             console.log('Failed to fetch numbers from API');
             console.log('Error was:');
             console.log(failureToFetchNumbers);
@@ -40,7 +40,7 @@ var newLeadSource = function(request, response) {
             console.log(savedLeadSource);
             response.redirect(201, '/lead-source/' + savedLeadSource._id + '/edit');
         })
-        .fail(function(numberPurchaseFailure) {
+        .catch(function(numberPurchaseFailure) {
             console.log('Could not purchase a number for lead source:');
             console.log(numberPurchaseFailure);
             response.status(500).send('Could not contact Twilio API');
@@ -53,9 +53,16 @@ var editLeadSource = function(request, response) {
         .then(function(foundLeadSource) {
             response.render(
                 'editLeadSource',
-                { leadSourceId: foundLeadSource._id,
-                  leadSourcePhoneNumber: foundLeadSource.number }
+                {
+                  leadSourceId: foundLeadSource._id,
+                  leadSourcePhoneNumber: foundLeadSource.number,
+                  leadSourceForwardingNumber: foundLeadSource.forwardingNumber,
+                  leadSourceDescription: foundLeadSource.description
+                }
             );
+        })
+        .catch(function() {
+            response.status(404).send('No such lead source');
         });
 };
 
@@ -69,9 +76,9 @@ var updateLeadSource = function(request, response) {
             return foundLeadSource.save();
         })
         .then(function(savedLeadSource) {
-            // Saved successfuly. Redirect
+            response.redirect(303, '/available-numbers');
         })
-        .fail(function(error) {
+        .catch(function(error) {
             // Failed to save. Do something
         });
 
