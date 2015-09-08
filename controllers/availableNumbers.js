@@ -57,7 +57,8 @@ var editLeadSource = function(request, response) {
                   leadSourceId: foundLeadSource._id,
                   leadSourcePhoneNumber: foundLeadSource.number,
                   leadSourceForwardingNumber: foundLeadSource.forwardingNumber,
-                  leadSourceDescription: foundLeadSource.description
+                  leadSourceDescription: foundLeadSource.description,
+                  messages: request.flash('error')
                 }
             );
         })
@@ -68,7 +69,16 @@ var editLeadSource = function(request, response) {
 
 var updateLeadSource = function(request, response) {
     var leadSourceId = request.params.id;
-    LeadSource.findOne({_id: leadSourceId})
+
+    request.checkBody('description', 'Description cannot be empty').notEmpty();
+    request.checkBody('forwardingNumber', 'Forwarding number cannot be empty').notEmpty();
+
+    if(request.validationErrors()) {
+        request.flash('error', request.validationErrors());
+        response.redirect(303, '/lead-source/' + leadSourceId + '/edit');
+    }
+
+    LeadSource.findOne({ _id: leadSourceId })
         .then(function(foundLeadSource) {
             foundLeadSource.description = request.body.description;
             foundLeadSource.forwardingNumber = request.body.forwardingNumber;
@@ -79,7 +89,7 @@ var updateLeadSource = function(request, response) {
             response.redirect(303, '/available-numbers');
         })
         .catch(function(error) {
-            // Failed to save. Do something
+            response.status(500).send('Could not save the lead source');
         });
 
 };

@@ -3,6 +3,14 @@ extends layout
 block content
   h2 Edit a lead source
   hr
+
+  if messages.length !== 0
+    div.alert.alert-danger
+      ul
+        each message in messages
+          li
+            | #{message.msg}
+
   h3 Lead source phone number: #{leadSourcePhoneNumber}
   div.row
     div.col-lg-4

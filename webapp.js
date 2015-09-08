@@ -1,6 +1,7 @@
 var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
+var expressValidator = require('express-validator');
 var session = require('express-session');
 var flash = require('connect-flash');
 var morgan = require('morgan');
@@ -22,6 +23,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
+// Validate requests
+app.use(expressValidator());
 
 // Create and manage HTTP sessions for all requests
 app.use(session({
