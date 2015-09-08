@@ -38,7 +38,7 @@ var newLeadSource = function(request, response) {
         .then(function(savedLeadSource) {
             console.log('Saving lead source:');
             console.log(savedLeadSource);
-            response.redirect(201, '/lead-source/' + savedLeadSource._id + '/edit');
+            response.redirect(302, '/lead-source/' + savedLeadSource._id + '/edit');
         })
         .catch(function(numberPurchaseFailure) {
             console.log('Could not purchase a number for lead source:');

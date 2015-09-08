@@ -17,8 +17,8 @@ block content
         form(name='editLeadSource', action='/lead-source/#{leadSourceId}/update', method='POST')
             div.form-group
                 label(for='description') Description:
-                input(type='text', name='description', value='#{leadSourceDescription}').form-control
+                input(type='text', name='description', value=leadSourceDescription).form-control
             div.form-group
                 label(for='forwardingNumber') Forwarding number:
-                input(type='text', name='forwardingNumber', value='#{leadSourceForwardingNumber}').form-control
+                input(type='text', name='forwardingNumber', value=leadSourceForwardingNumber).form-control
             input(type='submit', value='Update').btn.btn-primary
