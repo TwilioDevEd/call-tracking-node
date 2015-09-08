@@ -4,24 +4,22 @@ var mongoose = require('mongoose');
 var expect = require('chai').expect;
 var app = require('../webapp');
 var config = require('../config');
-var Message = require('../models/Message');
+var LeadSource = require('../models/LeadSource');
 
-describe('Messages web application', function() {
-
-    // Create supertest agent to test our routes
+describe('Lead sources controllers', function() {
     var agent = supertest(app);
 
     // Create a MongoDB connection and clear out messages collection before 
     // running tests
     before(function(done) {
         mongoose.connect('mongodb://127.0.0.1/test');
-        Message.remove({}, done);
+        LeadSource.remove({}, done);
     });
 
     // Test creating a message
-    describe('POST /messages', function() {
-        it('should require both a from number and a body', function(done) {
-            agent.post('/messages').expect(200).end(function(err, response) {
+    describe('POST /lead-source', function() {
+        it('saves the number after purchase', function(done) {
+            agent.post('/lead-source').expect(200).end(function(err, response) {
                 var $ = cheerio.load(response.text);
                 expect($('Message').text())
                     .to.equal('Oops, there was a problem.');
@@ -29,7 +27,11 @@ describe('Messages web application', function() {
             });
         });
 
-        it('should create a message', function(done) {
+        it('creates a new number in the API', function(done) {
+
+        });
+
+        it('redirects to edit page after saving', function(done) {
             agent.post('/messages')
                 .type('form')
                 .send({
@@ -46,12 +48,14 @@ describe('Messages web application', function() {
         });
     });
 
-    describe('GET /messages', function() {
-        it('should require HTTP basic authentication', function(done) {
+    describe('GET /lead-source/:id/edit', function() {
+        it('displays existing values', function(done) {
             agent.get('/messages').expect(401, done);
         });
+    });
 
-        it('should display a table containing one message', function(done) {
+    describe('POST /lead-source/:id/update', function() {
+        it('validates the presence of a description', function(done) {
             agent.get('/messages')
                 .auth(config.basic.username, config.basic.password)
                 .expect(200)
@@ -61,5 +65,10 @@ describe('Messages web application', function() {
                     done();
                 });
         });
+
+        it('validates the presence of a forwarding number', function(done) {
+
+        });
+
     });
 });
