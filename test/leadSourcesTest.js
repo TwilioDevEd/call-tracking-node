@@ -2,73 +2,96 @@ var cheerio = require('cheerio');
 var supertest = require('supertest');
 var mongoose = require('mongoose');
 var expect = require('chai').expect;
+var q = require('q');
+
+var sinon = require('sinon');
+var mockery = require('mockery');
+
 var app = require('../webapp');
 var config = require('../config');
-var LeadSource = require('../models/LeadSource');
 
 describe('Lead sources controllers', function() {
-    var agent = supertest(app);
 
     // Create a MongoDB connection and clear out messages collection before 
     // running tests
     before(function(done) {
         mongoose.connect('mongodb://127.0.0.1/test');
-        LeadSource.remove({}, done);
+        mockery.enable();
+
+        done();
     });
 
-    // Test creating a message
+    after(function(done) {
+        mockery.disable();
+        done();
+    });
+
+    // Test creating a new lead source
     describe('POST /lead-source', function() {
         it('saves the number after purchase', function(done) {
-            agent.post('/lead-source').expect(200).end(function(err, response) {
-                var $ = cheerio.load(response.text);
-                expect($('Message').text())
-                    .to.equal('Oops, there was a problem.');
-                done();
-            });
-        });
+            var agent = supertest(app);
 
-        it('creates a new number in the API', function(done) {
+            var mockCreate = sinon.stub().returns(q(1));
+            var mockIncomingPhoneNumbers = sinon.stub();
+            mockIncomingPhoneNumbers.create = mockCreate;
 
-        });
+            var twilioMock = sinon.stub().returns(mockIncomingPhoneNumbers);
+            mockery.registerMock('twilio', twilioMock);
 
-        it('redirects to edit page after saving', function(done) {
-            agent.post('/messages')
+
+            agent.post('/lead-source')
                 .type('form')
                 .send({
-                    From: '+15556667777',
-                    Body: 'hello world'
+                    phoneNumber: '+555555555'
                 })
-                .expect(200)
-                .end(function(err, response) {
-                    var $ = cheerio.load(response.text);
-                    expect($('Message').text())
-                        .to.equal('Message has been received!');
-                    done();
-                });
-        });
-    });
-
-    describe('GET /lead-source/:id/edit', function() {
-        it('displays existing values', function(done) {
-            agent.get('/messages').expect(401, done);
-        });
-    });
-
-    describe('POST /lead-source/:id/update', function() {
-        it('validates the presence of a description', function(done) {
-            agent.get('/messages')
-                .auth(config.basic.username, config.basic.password)
-                .expect(200)
-                .end(function(err, response) {
-                    var $ = cheerio.load(response.text);
-                    expect($('tr').length).to.equal(2);
+                .expect(302)
+                .end(function(err, res) {
                     done();
                 });
         });
 
-        it('validates the presence of a forwarding number', function(done) {
+        // it('creates a new number in the API', function(done) {
 
-        });
+        // });
 
+        // it('redirects to edit page after saving', function(done) {
+        //     agent.post('/messages')
+        //         .type('form')
+        //         .send({
+        //             From: '+15556667777',
+        //             Body: 'hello world'
+        //         })
+        //         .expect(200)
+        //         .end(function(err, response) {
+        //             var $ = cheerio.load(response.text);
+        //             expect($('Message').text())
+        //                 .to.equal('Message has been received!');
+        //             done();
+        //         });
+        // });
     });
+
+    // describe('GET /lead-source/:id/edit', function() {
+    //     it('displays existing values', function(done) {
+    //         agent.get('/messages').expect(401, done);
+    //     });
+    // });
+
+    // describe('POST /lead-source/:id/update', function() {
+    //     it('validates the presence of a description', function(done) {
+    //         agent.get('/messages')
+    //             .auth(config.basic.username, config.basic.password)
+    //             .expect(200)
+    //             .end(function(err, response) {
+    //                 var $ = cheerio.load(response.text);
+    //                 expect($('tr').length).to.equal(2);
+    //                 done();
+    //             });
+    //     });
+
+    //     it('validates the presence of a forwarding number', function(done) {
+
+    //     });
+
+    // });
 });

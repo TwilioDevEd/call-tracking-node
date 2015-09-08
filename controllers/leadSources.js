@@ -12,7 +12,7 @@ var create = function(request, response) {
         voiceApplicationSid: config.appSid
     })
         .then(function(purchasedNumber) {
-            var leadSource = new LeadSource({number: phoneNumberToPurchase});
+            var leadSource = new LeadSource({ number: phoneNumberToPurchase });
             return leadSource.save();
         })
         .then(function(savedLeadSource) {
