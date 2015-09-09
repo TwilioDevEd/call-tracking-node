@@ -5,20 +5,20 @@ block content
   hr
 
   if messages.length !== 0
-    div.alert.alert-danger
+    .alert.alert-danger
       ul
         each message in messages
           li.validationError
             | #{message.msg}
 
   h3 Lead source phone number: #{leadSourcePhoneNumber}
-  div.row
-    div.col-lg-4
+  .row
+    .col-lg-4
         form(name='editLeadSource', action='/lead-source/#{leadSourceId}/update', method='POST')
-            div.form-group
+            .form-group
                 label(for='description') Description:
                 input(type='text', name='description', value=leadSourceDescription).form-control#description
-            div.form-group
+            .form-group
                 label(for='forwardingNumber') Forwarding number:
                 input(type='text', name='forwardingNumber', value=leadSourceForwardingNumber).form-control#forwardingNumber
             input(type='submit', value='Update').btn.btn-primary

@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  h2 Call tracking
+  .row
+    .col-lg-4
+      h3 Add a new number
+      p Create a new lead source by purchasing a new phone number. Area code is optional
+
+      form(name='searchNumbers', action='/available-numbers', method='GET')
+        .form-group
+          label(for='areaCode') Area code
+          input.form-control(type='text', name='areaCode')
+        input.btn.btn-sm.btn-primary(type='submit', value='Search')
+
+      hr
+      h3 Lead sources
+      a.btn.btn-sm.btn-default(href='https://www.twilio.com/user/account/apps/' + '#{appSid}') App configuration
+      table.table
+        thead
+          tr
+            th Phone number
+            th Description
+            th Forwarding number
+            th
+        tbody
+          each leadSource in leadSources
+            tr
+              td #{leadSource.number}
+              td #{leadSource.description}
+              td #{leadSource.forwardingNumber}
+              td
+                a.btn.btn-xs.btn-default(href= '/lead-source/' + '#{leadSource._id}' + '/edit') Edit
+
+    h3 Charts
+    p The latest statistics about how the lead sources are performing
+    .col-lg-4
+      h3 Calls by lead source
+      p The number of incoming calls each lead source has received
+      canvas#pie-by-lead-source
+    .col-lg-4
+      h3 Calls by city
+      p The number of incoming calls from different cities, based on Twilio call data
+      canvas#pie-by-city

@@ -65,10 +65,10 @@ var update = function(request, response) {
             return foundLeadSource.save();
         })
         .then(function(savedLeadSource) {
-            response.redirect(303, '/available-numbers');
+            return response.redirect(303, '/available-numbers');
         })
         .catch(function(error) {
-            response.status(500).send('Could not save the lead source');
+            return response.status(500).send('Could not save the lead source');
         });
 
 };
