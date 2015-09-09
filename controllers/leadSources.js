@@ -12,13 +12,12 @@ var create = function(request, response) {
         voiceApplicationSid: config.appSid
     })
         .then(function(purchasedNumber) {
-            var leadSource = new LeadSource({ number: phoneNumberToPurchase });
+            var leadSource = new LeadSource({ number: purchasedNumber.phoneNumber });
             return leadSource.save();
         })
         .then(function(savedLeadSource) {
-            console.log('Saving lead source:');
-            console.log(savedLeadSource);
-            response.redirect(302, '/lead-source/' + savedLeadSource._id + '/edit');
+            console.log('Saving lead source');
+            response.redirect(303, '/lead-source/' + savedLeadSource._id + '/edit');
         })
         .catch(function(numberPurchaseFailure) {
             console.log('Could not purchase a number for lead source:');
@@ -31,7 +30,7 @@ var edit = function(request, response) {
     var leadSourceId = request.params.id;
     LeadSource.findOne({ _id: leadSourceId })
         .then(function(foundLeadSource) {
-            response.render(
+            return response.render(
                 'editLeadSource',
                 {
                   leadSourceId: foundLeadSource._id,
@@ -43,7 +42,7 @@ var edit = function(request, response) {
             );
         })
         .catch(function() {
-            response.status(404).send('No such lead source');
+            return response.status(404).send('No such lead source');
         });
 };
 
@@ -55,7 +54,7 @@ var update = function(request, response) {
 
     if(request.validationErrors()) {
         request.flash('error', request.validationErrors());
-        response.redirect(303, '/lead-source/' + leadSourceId + '/edit');
+        return response.redirect(303, '/lead-source/' + leadSourceId + '/edit');
     }
 
     LeadSource.findOne({ _id: leadSourceId })
