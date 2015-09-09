@@ -1,0 +1,54 @@
+[
+  {
+    "scope": "https://api.twilio.com:443",
+    "method": "POST",
+    "path": "/2010-04-01/Accounts/ACe087e572e3dd63bce01ecf70e01cd7bb/IncomingPhoneNumbers.json",
+    "body": "PhoneNumber=%2B12568417192&VoiceCallerIdLookup=true&VoiceApplicationSid=AP1640b85dcacd4d3f98fd10331cd918be",
+    "status": 201,
+    "response": {
+      "sid": "PN0252878f11999eda28a5b999e9566471",
+      "account_sid": "ACe087e572e3dd63bce01ecf70e01cd7bb",
+      "friendly_name": "(256) 841-7192",
+      "phone_number": "+12568417192",
+      "voice_url": null,
+      "voice_method": "POST",
+      "voice_fallback_url": null,
+      "voice_fallback_method": "POST",
+      "voice_caller_id_lookup": true,
+      "date_created": "Wed, 09 Sep 2015 14:35:21 +0000",
+      "date_updated": "Wed, 09 Sep 2015 14:35:21 +0000",
+      "sms_url": "",
+      "sms_method": "POST",
+      "sms_fallback_url": "",
+      "sms_fallback_method": "POST",
+      "address_requirements": "none",
+      "beta": null,
+      "capabilities": {
+        "voice": true,
+        "sms": true,
+        "mms": true
+      },
+      "status_callback": "",
+      "status_callback_method": "POST",
+      "api_version": "2010-04-01",
+      "voice_application_sid": "AP1640b85dcacd4d3f98fd10331cd918be",
+      "sms_application_sid": "",
+      "trunk_sid": null,
+      "uri": "/2010-04-01/Accounts/ACe087e572e3dd63bce01ecf70e01cd7bb/IncomingPhoneNumbers/PN0252878f11999eda28a5b999e9566471.json"
+    },
+    "headers": {
+      "access-control-allow-credentials": "true",
+      "access-control-allow-headers": "Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since",
+      "access-control-allow-methods": "GET, POST, DELETE, OPTIONS",
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "ETag",
+      "content-type": "application/json; charset=utf-8",
+      "date": "Wed, 09 Sep 2015 17:16:11 GMT",
+      "strict-transport-security": "max-age=15768000",
+      "x-powered-by": "AT-5000",
+      "x-shenanigans": "none",
+      "content-length": "922",
+      "connection": "Close"
+    }
+  }
+]

@@ -2,10 +2,7 @@ var cheerio = require('cheerio');
 var supertest = require('supertest');
 var mongoose = require('mongoose');
 var expect = require('chai').expect;
-var q = require('q');
-
-var sinon = require('sinon');
-var mockery = require('mockery');
+var vcr = require('nock-vcr-recorder-mocha');
 
 var app = require('../webapp');
 var config = require('../config');
@@ -16,33 +13,22 @@ describe('Lead sources controllers', function() {
     // running tests
     before(function(done) {
         mongoose.connect('mongodb://127.0.0.1/test');
-        mockery.enable();
-
         done();
     });
 
     after(function(done) {
-        mockery.disable();
         done();
     });
 
     // Test creating a new lead source
     describe('POST /lead-source', function() {
-        it('saves the number after purchase', function(done) {
+        vcr.it('saves the number after purchase', function(done) {
             var agent = supertest(app);
-
-            var mockCreate = sinon.stub().returns(q(1));
-            var mockIncomingPhoneNumbers = sinon.stub();
-            mockIncomingPhoneNumbers.create = mockCreate;
-
-            var twilioMock = sinon.stub().returns(mockIncomingPhoneNumbers);
-            mockery.registerMock('twilio', twilioMock);
-
 
             agent.post('/lead-source')
                 .type('form')
                 .send({
-                    phoneNumber: '+555555555'
+                    phoneNumber: '+12568417192'
                 })
                 .expect(302)
                 .end(function(err, res) {

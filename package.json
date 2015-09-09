@@ -43,7 +43,7 @@
     "chai": "^2.1.0",
     "cheerio": "^0.19.0",
     "mocha": "^2.3.0",
-    "mockery": "^1.4.0",
+    "nock-vcr-recorder-mocha": "^0.3.2",
     "sinon": "^1.16.1",
     "supertest": "^1.1.0"
   },
