@@ -1,4 +1,4 @@
-var LeadSource = require('../models/leadSource');
+var LeadSource = require('../models/LeadSource');
 var Lead = require('../models/Lead');
 var config = require('../config');
 

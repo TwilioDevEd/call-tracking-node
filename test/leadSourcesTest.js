@@ -7,7 +7,7 @@ var vcr = require('nock-vcr-recorder-mocha');
 
 var app = require('../webapp');
 var config = require('../config');
-var LeadSource = require('../models/leadSource');
+var LeadSource = require('../models/LeadSource');
 
 describe('Lead sources controllers', function() {
     after(function(done) {

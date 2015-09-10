@@ -6,7 +6,7 @@ var q = require('q');
 
 var app = require('../webapp');
 var config = require('../config');
-var LeadSource = require('../models/leadSource');
+var LeadSource = require('../models/LeadSource');
 var Lead = require('../models/Lead');
 
 describe('Lead controllers', function() {

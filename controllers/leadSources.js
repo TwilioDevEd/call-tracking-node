@@ -1,6 +1,6 @@
 var twilio = require('twilio');
 var config = require('../config');
-var LeadSource = require('../models/leadSource');
+var LeadSource = require('../models/LeadSource');
 
 var create = function(request, response) {
     var phoneNumberToPurchase = request.body.phoneNumber;
