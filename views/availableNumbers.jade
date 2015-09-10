@@ -16,5 +16,5 @@ block content
               td= number.region
               td
                 form(name='purchaseNumber', action='/lead-source', method='POST')
-                    input(type='hidden', name='phoneNumber', value="#{number.phone_number}")
-                    input(type='submit', value='Purchase').btn.btn-xs.btn-default
+                  input(type='hidden', name='phoneNumber', value="#{number.phone_number}")
+                  input(type='submit', value='Purchase').btn.btn-sm.btn-primary

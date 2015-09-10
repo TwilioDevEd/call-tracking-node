@@ -10,7 +10,7 @@ block content
       form(name='searchNumbers', action='/available-numbers', method='GET')
         .form-group
           label(for='areaCode') Area code
-          input.form-control(type='text', name='areaCode')
+          input.form-control(type='number', name='areaCode')
         input.btn.btn-sm.btn-primary(type='submit', value='Search')
 
       hr
