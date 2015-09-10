@@ -1,16 +1,9 @@
-# Twilio Starter Project for Node.js and Express
+# Call tracking with Twilio, Node.js, and Express
 
-This project is intended to jump-start Twilio development projects using Node.js 
-and the [Express](http://www.expressjs.com) web framework.  In addition to 
-Express, this project contains other third-party modules that may be useful in 
-creating Node.js web applications generally.
+[![Build Status](https://travis-ci.org/TwilioDevEd/call-tracking-node.svg?branch=master)](https://travis-ci.org/TwilioDevEd/call-tracking-node)
 
-This sample application demonstrates how to receive incoming SMS messages and
-store them in a MongoDB database.
-
-## Deploy On Heroku
-
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/TwilioDevEd/starter-node-express)
+This application demostrates how to use Twilio track calls and measure
+the effectiveness of marketing campaigns
 
 ## Running the Project on Your Machine
 
@@ -35,18 +28,21 @@ This should install all of our project dependencies from npm into a local
 
 ### Configuration
 
-Next, open `config.js` at the root of the project and update it with values 
-from your environment and your [Twilio account](https://www.twilio.com/user/account/voice-messaging). 
-You can either export these values as system environment variables (this is the 
-default setup), or you can replace these values with hard-coded strings 
-(be careful you don't commit them to git!).
+Next, open `.env.sample` at the root of the project and update it with values
+from your
+[Twilio account](https://www.twilio.com/user/account/voice-messaging)
+and local configuration. Save the file as `.env`. At
+the very least you'll need to set `TWILIO_AUTH_TOKEN`,
+`TWILIO_ACCOUNT_SID` and `MONGO_URL`.
 
 This sample application stores data in a MongoDB database using 
 [Mongoose](http://mongoosejs.com/). You can download and run MongoDB 
 yourself ([OS X](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/), 
 [Linux](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/), 
 [Windows](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-windows/)), 
-or you can use a hosted service like [compose.io](https://www.compose.io/).
+or you can use a hosted service like
+[compose.io](https://www.compose.io/). If you're running Mongo locally
+`MONGO_URL` can be set to something like `mongodb://localhost/call-tracking`.
 
 On OS X, the maybe the easiest way to get MongoDB running locally is to install
 via [Homebrew](http://brew.sh/).
@@ -63,13 +59,7 @@ mongod
 
 By default, there will be a local database running that's not password protected.
 To connect to MongoDB, you'll need a [connection string](http://mongoosejs.com/docs/connections.html) 
-to use with Mongoose. Enter this into your current terminal window, and/or consider
-adding it to your `.bash_profile` so every new terminal window will have this
-setting.
-
-```bash
-export MONGO_URL=mongodb://localhost/starter_node_express
-```
+to use with Mongoose.
 
 ### Running the Project
 
