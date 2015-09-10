@@ -115,7 +115,7 @@ describe('Lead sources controllers', function() {
                         forwardingNumber: newForwardingNumber
                     })
                     .expect(function(response) {
-                        expect(response.headers.location).to.equal('/available-numbers');
+                        expect(response.headers.location).to.equal('/dashboard');
                         LeadSource.findOne({ number: phoneNumber })
                             .then(function(foundLeadSource) {
                                 expect(foundLeadSource.description)
