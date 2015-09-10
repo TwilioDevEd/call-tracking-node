@@ -23,10 +23,6 @@ var create = function(request, response) {
 
             return newLead.save();
         })
-        .then(function(savedLead) {
-            console.log('Saved new lead:');
-            console.log(savedLead);
-        })
         .catch(function(err) {
             console.log('Failed to forward call:');
             console.log(err);

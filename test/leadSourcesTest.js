@@ -1,6 +1,7 @@
+require('./testHelper');
+
 var cheerio = require('cheerio');
 var supertest = require('supertest');
-var mongoose = require('mongoose');
 var expect = require('chai').expect;
 var vcr = require('nock-vcr-recorder-mocha');
 
@@ -9,14 +10,6 @@ var config = require('../config');
 var LeadSource = require('../models/leadSource');
 
 describe('Lead sources controllers', function() {
-
-    // Create a MongoDB connection and clears the database after every test
-
-    before(function(done) {
-        mongoose.connect('mongodb://127.0.0.1/test');
-        done();
-    });
-
     after(function(done) {
         LeadSource.remove({}, done);
     });
