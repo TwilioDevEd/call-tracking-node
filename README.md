@@ -96,8 +96,18 @@ are a paid feature of ngrok):
 ngrok http -subdomain=chunky-danger-monkey 3000
 ```
 
-In your Twilio number configuration, you would then need to add `/calls` as the
-Voice URL route, and `/messages` as the Messaging URL.
+In your Twilio app configuration you'll need to set
+`http://<your-ngrok-domain>.ngrok.io/lead` as the callback URL. Open
+the application and then click the "App configuration" button.
+
+![app configuration button screenshot](images/app-configuration.png)
+
+The button will take you to your TwiML call tracking
+application. Under "Voice" you will find a "Request URL" input
+box. There you should put the URL to the application's lead resource
+(e.g `http://<your-ngrok-domain>.ngrok.io/lead`).
+
+![webhook configuration](images/webhook.png)
 
 ## License
 
