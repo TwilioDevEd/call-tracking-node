@@ -21,4 +21,5 @@ block content
             .form-group
                 label(for='forwardingNumber') Forwarding number:
                 input(type='text', name='forwardingNumber', value=leadSourceForwardingNumber).form-control#forwardingNumber
+            input(type='hidden', name='_csrf', value="#{csrftoken}")
             input(type='submit', value='Update').btn.btn-primary

@@ -5,6 +5,7 @@ var expressValidator = require('express-validator');
 var session = require('express-session');
 var flash = require('connect-flash');
 var morgan = require('morgan');
+var csurf = require('csurf');
 var config = require('./config');
 
 // Create Express web app
@@ -37,8 +38,26 @@ app.use(session({
 // Use connect-flash to persist informational messages across redirects
 app.use(flash());
 
+
 // Configure application routes
-require('./controllers/router')(app);
+var routes = require('./controllers/router');
+var webRouter = express.Router();
+var webhookRouter = express.Router();
+
+// Add the CSRF protection for web routes
+if(process.env.NODE_ENV !== 'test') {
+    webRouter.use(csurf());
+    webRouter.use(function(request, response, next) {
+        response.locals.csrftoken = request.csrfToken();
+        next();
+    });
+}
+
+routes.webhookRoutes(webhookRouter);
+routes.webRoutes(webRouter);
+
+app.use(webhookRouter);
+app.use(webRouter);
 
 // Handle 404
 app.use(function (request, response, next) {

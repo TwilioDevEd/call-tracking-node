@@ -4,14 +4,17 @@ var leads = require('./leads');
 var dashboard = require('./dashboard');
 
 // Map routes to controller functions
-module.exports = function(app) {
-    app.get('/', function(req, resp) { return resp.redirect(302, '/dashboard'); });
-    app.get('/available-numbers', availableNumbers.index);
-    app.post('/lead-source', leadSources.create);
-    app.get('/lead-source/:id/edit', leadSources.edit);
-    app.post('/lead-source/:id/update', leadSources.update);
-    app.get('/dashboard', dashboard.show);
-    app.post('/lead', leads.create);
-    app.get('/lead/summary-by-lead-source', leads.leadsByLeadSource);
-    app.get('/lead/summary-by-city', leads.leadsByCity);
+module.exports.webRoutes = function(router) {
+    router.get('/', function(req, resp) { return resp.redirect(302, '/dashboard'); });
+    router.get('/available-numbers', availableNumbers.index);
+    router.post('/lead-source', leadSources.create);
+    router.get('/lead-source/:id/edit', leadSources.edit);
+    router.post('/lead-source/:id/update', leadSources.update);
+    router.get('/dashboard', dashboard.show);
+    router.get('/lead/summary-by-lead-source', leads.leadsByLeadSource);
+    router.get('/lead/summary-by-city', leads.leadsByCity);
+};
+
+module.exports.webhookRoutes = function(router) {
+    router.post('/lead', leads.create);
 };
