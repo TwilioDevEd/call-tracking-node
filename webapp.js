@@ -43,7 +43,7 @@ var routes = require('./controllers/router');
 var webRouter = express.Router();
 var webhookRouter = express.Router();
 
-// Add the CSRF protection for web routes
+// Add CSRF protection for web routes
 if (process.env.NODE_ENV !== 'test') {
   webRouter.use(csurf());
   webRouter.use(function(request, response, next) {
