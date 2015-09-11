@@ -1,9 +1,9 @@
 .chapter(data-title='Call Tracking with Twilio, Node.js and Express ')
-  .step(data-file='index.js')
+  .step(data-file='webapp.js')
     :markdown
       ## What does this thing do?
 
-      This [Laravel](http://laravel.com/) web application shows
+      This [Express.js](http://expressjs.com/) web application shows
       how you can use Twilio to track the effectiveness of different
       marketing channels.
 
@@ -15,9 +15,11 @@
       - It displays charts showing data about the phone numbers and the calls
       they receive
 
+      The application uses MongoDB together with Mongoose as the persistence layer.
+
       In this tutorial, we'll point out the key bits of code that make
       this application work.  [Check out the project README on
-      GitHub](https://github.com/twiliodeved/call-tracking-laravel) to
+      GitHub](https://github.com/twiliodeved/call-tracking-node) to
       see how to run the code yourself.
 
       Let's get started! Click the right arrow above to advance to the next
@@ -27,12 +29,14 @@
 
       **See also:**
 
-      * [Twilio PHP Helper Library](https://github.com/twilio/twilio-php/)
+      * [Twilio Node Helper Library](http://twilio.github.io/twilio-node/)
       * [Twilio REST API docs](https://www.twilio.com/docs/api)
-      * [Laravel documentation](http://laravel.com/docs/5.1)
+      * [Getting started with Express.js](http://expressjs.com/starter/installing.html)
+      * [Getting started with MongoDB](http://docs.mongodb.org/manual/)
+      * [Mongoose quickstart](http://mongoosejs.com/docs/index.html)
       * [What is Call Tracking?](http://www.searchenginejournal.com/seo-beginner-guide-call-tracking-care/83173/)
 
-  .step(data-file='index.js')
+  .step(data-file='controllers/availableNumbers.js')
     :markdown
       ## Search for available phone numbers
 
@@ -45,12 +49,12 @@
 
       **See also:**
 
-      * [twilio-php helper](https://twilio-php.readthedocs.org/en/latest)
-      * [Searching for numbers in twilio-php](https://twilio-php.readthedocs.org/en/latest/usage/rest/phonenumbers.html#searching-for-a-number)
-      * [Buying numbers in twilio-php](https://twilio-php.readthedocs.org/en/latest/usage/rest/phonenumbers.html#buying-a-number)
+      * [Twilio Node Helper Library](http://twilio.github.io/twilio-node/)
+      * [Callbacks versus Promises](http://twilio.github.io/twilio-node/#callbacks)
+      * [Twilio Node examples](http://twilio.github.io/twilio-node/#moreexamples)
       * [REST API: Available Phone Numbers](https://www.twilio.com/docs/api/rest/available-phone-numbers)
 
-  .step(data-file='index.js')
+  .step(data-file='views/availableNumbers.jade')
     :markdown
       ## Display available phone numbers
 
@@ -65,15 +69,16 @@
 
       **See also:**
 
-      * [The Blade templating engine](http://laravel.com/docs/5.1/blade)
-      * [Laravel Collective: Forms & Html](http://laravelcollective.com/docs/5.1/html)
+      * [Jade template engine](http://jade-lang.com/)
+      * [Jade language reference](http://jade-lang.com/reference/)
+      * [Usings template engines with Express](http://expressjs.com/guide/using-template-engines.html)
 
 
-  .step(data-file='index.js')
+  .step(data-file='controllers/leadSources.js', data-highlight='5-27')
     :markdown
       ## Buy a phone number
 
-      The `store` endpoint for the LeadSource resource expects a phone
+      The `create` function for the LeadSource resource expects a phone
       number as a parameter and purchases a number through Twilio's
       API on behalf of this application's user. It enables the caller
       ID feature and associates the number to the current TwiML app
@@ -86,10 +91,11 @@
 
       **See also:**
 
-      * [Buying numbers in twilio-php](https://twilio-php.readthedocs.org/en/latest/usage/rest/phonenumbers.html#buying-a-number)
       * [Twilio REST API: Available Phone Numbers](https://www.twilio.com/docs/api/rest/available-phone-numbers)
+      * [Twilio Node examples](http://twilio.github.io/twilio-node/#moreexamples)
+      * [Save models with Mongoose](http://mongoosejs.com/docs/api.html#model_Model-save)
 
-  .step(data-file='app/Http/Controllers/LeadSourceController.php', data-highlight='60-74')
+  .step(data-file='controllers/leadSources.js', data-highlight='49-74')
     :markdown
       ## Associate a phone number with a lead source
 
@@ -102,11 +108,12 @@
 
       **See also:**
 
-      * [Laravel Collective Forms](http://laravelcollective.com/docs/5.1/html#opening-a-form)
-      * [Laravel redirects](http://laravel.com/docs/5.1/responses#redirects)
+      * [Mongoose queries](http://mongoosejs.com/docs/queries.html)
+      * [Forms with Jade](https://github.com/jadejs/jade/blob/master/examples/form.jade)
+      * [Express.js API documentation](http://expressjs.com/api.html)
       * [E.164 format](https://en.wikipedia.org/wiki/E.164)
 
-  .step(data-file='app/LeadSource.php')
+  .step(data-file='models/LeadSource.js')
     :markdown
       ## The LeadSource model
 
@@ -115,17 +122,16 @@
       Twilio number to a named lead source (like "Wall Street Journal
       Ad" or "Dancing guy with sign"). It also tracks a phone number
       to which we'd like all the calls redirected, like your sales or
-      support help line.  It also provides a convenience method to
-      find leads associated to this lead source
-
+      support help line.
       ---
 
       **See also:**
 
-      * [Eloquent models](http://laravel.com/docs/5.1/eloquent)
-      * [Eloquent hasMany](http://laravel.com/api/5.1/Illuminate/Database/Eloquent/Model.html#method_hasMany)
+      * [Mongoose models](http://mongoosejs.com/docs/models.html)
+      * [Mongoose populate](http://mongoosejs.com/docs/populate.html)
+      * [Mongoose schema types](http://mongoosejs.com/docs/schematypes.html)
 
-  .step(data-file='app/Lead.php', data-highlight='9-16')
+  .step(data-file='models/Lead.js')
     :markdown
       ## The Lead model
 
@@ -140,9 +146,11 @@
 
       **See also:**
 
-      * [Eloquent belongsTo](http://laravel.com/api/5.1/Illuminate/Database/Eloquent/Model.html#method_belongsTo)
+      * [Mongoose models](http://mongoosejs.com/docs/models.html)
+      * [Mongoose populate](http://mongoosejs.com/docs/populate.html)
+      * [Mongoose schema types](http://mongoosejs.com/docs/schematypes.html)
 
-  .step(data-file='app/Http/Controllers/LeadController.php', data-highlight='36-56')
+  .step(data-file='controllers/leads.js', data-highlight='8-30')
     :markdown
       ## Forward calls and create leads
 
@@ -160,54 +168,54 @@
       **See also:**
 
       * [Twilio voice request parameters](https://www.twilio.com/docs/api/twiml/twilio_request)
-      * [Excluding URIs from CSRF protection](http://laravel.com/docs/5.1/routing#csrf-excluding-uris)
-      * [TwiML creation with twilio-php](https://twilio-php.readthedocs.org/en/latest/usage/twiml.html)
+      * [TwiML basics with twilio-node](http://twilio.github.io/twilio-node/#twimlBasic)
       * [TwiML <Dial> verb](https://www.twilio.com/docs/api/twiml/dial)
 
-  .step(data-file='app/Lead.php', data-highlight='18-50')
+  .step(data-file='controllers/leads.js', data-highlight='32-53')
     :markdown
       ## Get statistics about our lead sources
 
       One useful statistic we can get from our data is how many calls
       each `LeadSource` has received. We might also want to know the
-      cities the leads are coming from. For this we define two
-      Eloquent queries.
+      cities the leads are coming from. For this we define two functions.
       ---
 
       **See also:**
 
-      * [Eloquent: Querying Relations](http://laravel.com/docs/5.1/eloquent-relationships#querying-relations)
+      * [Mongoose population](http://mongoosejs.com/docs/populate.html)
+      * [Underscore.js](http://underscorejs.org/)
+      * [Underscore.js countBy](http://underscorejs.org/#countBy)
 
   .step(data-file='public/js/pieCharts.js')
     :markdown
       ## Visualize our statistics with Chart.js
 
-      Back on the home page, we fetch call tracking statistics [in
-      JSON from the
-      server](http://laravel.com/docs/5.1/responses#json-responses)
-      using [jQuery](https://api.jquery.com/jquery.get/).  We display
-      the stats in colorful pie charts we create with
+      Back on the home page, we fetch call tracking statistics in JSON
+      from the server using
+      [jQuery](https://api.jquery.com/jquery.get/).  We display the
+      stats in colorful pie charts we create with
       [Chart.js](http://www.chartjs.org/).
 
-  .step(data-file='app/Http/Controllers/LeadController.php', data-highlight='36-56')
+  .step(data-file='index.js')
     :markdown
       ## Where to next?
 
-      That's it! Our Laravel application is now ready to purchase new phone
+      That's it! Our Express.js application is now ready to purchase new phone
       numbers, forward incoming calls, and record some statistics for our
       business. 
 
-      If you're a PHP developer working with Twilio, you might also enjoy these
+      If you're a Node.js developer working with Twilio, you might also enjoy these
       tutorials:
 
-      [**Click-To-Call (Laravel)**](https://www.twilio.com/docs/howto/walkthrough/click-to-call/php/laravel)
+      [**Click-To-Call (Node.js)**](https://www.twilio.com/docs/howto/walkthrough/click-to-call/node/express)
 
-      Put a button on your web page that connects visitors to live support or sales people via telephone.
+      Put a button on your web page that connects visitors to live
+      support or sales people via telephone.
 
-      [**Appointment Reminders (Laravel)**](https://www.twilio.com/docs/howto/walkthrough/appointment-reminders/php/laravel)
+      [**Two Factor Authentication with Authy (Node.js)**](https://www.twilio.com/docs/howto/walkthrough/two-factor-authentication/node/express)
 
-      Send your customers automatic reminders ahead of appoiments using Twilio
-      SMS.
+      Learn to implement account verification in your web app with
+      Twilio-powered Authy.
 
       Thanks for checking out this tutorial! If you have any feedback to share
       with us, we'd love to hear it. Tweet [@twilio](https://twitter.com/twilio)

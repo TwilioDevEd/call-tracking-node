@@ -1,6 +1,6 @@
 {
     "title": "Call Tracking",
-    "repo": "TwilioDevEd/call-tracking-laravel",
+    "repo": "TwilioDevEd/call-tracking-node",
     "description": "Use Twilio to track the effectiveness of your marketing campaigns. Let's get started!",
     "heroku": false
 }
