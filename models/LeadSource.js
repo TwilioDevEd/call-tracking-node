@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 
 var LeadSourceSchema = new mongoose.Schema({
-    number: {type: String, required: true},
-    description: {type: String, required: false},
-    forwardingNumber: {type: String, required: false}
+  number: {type: String, required: true},
+  description: {type: String, required: false},
+  forwardingNumber: {type: String, required: false}
 });
 
 // Create a Mongoose model from our schema

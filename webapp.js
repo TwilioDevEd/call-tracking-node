@@ -14,7 +14,7 @@ app.set('view engine', 'jade');
 
 // Use morgan for HTTP request logging in dev and prod
 if (process.env.NODE_ENV !== 'test') {
-    app.use(morgan('combined'));
+  app.use(morgan('combined'));
 }
 
 // Serve static assets
@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Parse incoming form-encoded HTTP bodies
 app.use(bodyParser.urlencoded({
-    extended: true
+  extended: true
 }));
 
 // Validate requests
@@ -30,14 +30,13 @@ app.use(expressValidator());
 
 // Create and manage HTTP sessions for all requests
 app.use(session({
-    secret: config.secret,
-    resave: true,
-    saveUninitialized: true
+  secret: config.secret,
+  resave: true,
+  saveUninitialized: true
 }));
 
 // Use connect-flash to persist informational messages across redirects
 app.use(flash());
-
 
 // Configure application routes
 var routes = require('./controllers/router');
@@ -45,12 +44,12 @@ var webRouter = express.Router();
 var webhookRouter = express.Router();
 
 // Add the CSRF protection for web routes
-if(process.env.NODE_ENV !== 'test') {
-    webRouter.use(csurf());
-    webRouter.use(function(request, response, next) {
-        response.locals.csrftoken = request.csrfToken();
-        next();
-    });
+if (process.env.NODE_ENV !== 'test') {
+  webRouter.use(csurf());
+  webRouter.use(function(request, response, next) {
+    response.locals.csrftoken = request.csrfToken();
+    next();
+  });
 }
 
 routes.webhookRoutes(webhookRouter);
@@ -60,18 +59,18 @@ app.use(webhookRouter);
 app.use(webRouter);
 
 // Handle 404
-app.use(function (request, response, next) {
-    response.status(404);
-    response.sendFile(path.join(__dirname, 'public', '404.html'));
+app.use(function(request, response, next) {
+  response.status(404);
+  response.sendFile(path.join(__dirname, 'public', '404.html'));
 });
 
 // Unhandled errors (500)
 app.use(function(err, request, response, next) {
-    console.error('An application error has occurred:');
-    console.error(err);
-    console.error(err.stack);
-    response.status(500);
-    response.sendFile(path.join(__dirname, 'public', '500.html'));
+  console.error('An application error has occurred:');
+  console.error(err);
+  console.error(err.stack);
+  response.status(500);
+  response.sendFile(path.join(__dirname, 'public', '500.html'));
 });
 
 // Export Express app

@@ -3,35 +3,35 @@ var config = require('../config');
 var LeadSource = require('../models/LeadSource');
 
 var create = function(request, response) {
-    var phoneNumberToPurchase = request.body.phoneNumber;
-    var client = twilio(config.accountSid, config.authToken);
+  var phoneNumberToPurchase = request.body.phoneNumber;
+  var client = twilio(config.accountSid, config.authToken);
 
-    client.incomingPhoneNumbers.create({
-        phoneNumber: phoneNumberToPurchase,
-        voiceCallerIdLookup: true,
-        voiceApplicationSid: config.appSid
-    })
+  client.incomingPhoneNumbers.create({
+    phoneNumber: phoneNumberToPurchase,
+    voiceCallerIdLookup: true,
+    voiceApplicationSid: config.appSid
+  })
         .then(function(purchasedNumber) {
-            var leadSource = new LeadSource({ number: purchasedNumber.phoneNumber });
-            return leadSource.save();
+          var leadSource = new LeadSource({number: purchasedNumber.phoneNumber});
+          return leadSource.save();
         })
         .then(function(savedLeadSource) {
-            console.log('Saving lead source');
-            response.redirect(303, '/lead-source/' + savedLeadSource._id + '/edit');
+          console.log('Saving lead source');
+          response.redirect(303, '/lead-source/' + savedLeadSource._id + '/edit');
         })
         .catch(function(numberPurchaseFailure) {
-            console.log('Could not purchase a number for lead source:');
-            console.log(numberPurchaseFailure);
-            response.status(500).send('Could not contact Twilio API');
+          console.log('Could not purchase a number for lead source:');
+          console.log(numberPurchaseFailure);
+          response.status(500).send('Could not contact Twilio API');
         });
 };
 
 var edit = function(request, response) {
-    var leadSourceId = request.params.id;
-    LeadSource.findOne({ _id: leadSourceId })
+  var leadSourceId = request.params.id;
+  LeadSource.findOne({_id: leadSourceId})
         .then(function(foundLeadSource) {
-            return response.render(
-                'editLeadSource',
+          return response.render(
+              'editLeadSource',
                 {
                   leadSourceId: foundLeadSource._id,
                   leadSourcePhoneNumber: foundLeadSource.number,
@@ -42,33 +42,33 @@ var edit = function(request, response) {
             );
         })
         .catch(function() {
-            return response.status(404).send('No such lead source');
+          return response.status(404).send('No such lead source');
         });
 };
 
 var update = function(request, response) {
-    var leadSourceId = request.params.id;
+  var leadSourceId = request.params.id;
 
-    request.checkBody('description', 'Description cannot be empty').notEmpty();
-    request.checkBody('forwardingNumber', 'Forwarding number cannot be empty').notEmpty();
+  request.checkBody('description', 'Description cannot be empty').notEmpty();
+  request.checkBody('forwardingNumber', 'Forwarding number cannot be empty').notEmpty();
 
-    if(request.validationErrors()) {
-        request.flash('error', request.validationErrors());
-        return response.redirect(303, '/lead-source/' + leadSourceId + '/edit');
-    }
+  if (request.validationErrors()) {
+    request.flash('error', request.validationErrors());
+    return response.redirect(303, '/lead-source/' + leadSourceId + '/edit');
+  }
 
-    LeadSource.findOne({ _id: leadSourceId })
+  LeadSource.findOne({_id: leadSourceId})
         .then(function(foundLeadSource) {
-            foundLeadSource.description = request.body.description;
-            foundLeadSource.forwardingNumber = request.body.forwardingNumber;
+          foundLeadSource.description = request.body.description;
+          foundLeadSource.forwardingNumber = request.body.forwardingNumber;
 
-            return foundLeadSource.save();
+          return foundLeadSource.save();
         })
         .then(function(savedLeadSource) {
-            return response.redirect(303, '/dashboard');
+          return response.redirect(303, '/dashboard');
         })
         .catch(function(error) {
-            return response.status(500).send('Could not save the lead source');
+          return response.status(500).send('Could not save the lead source');
         });
 
 };
