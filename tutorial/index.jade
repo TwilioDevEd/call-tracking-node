@@ -1,0 +1,214 @@
+.chapter(data-title='Call Tracking with Twilio, Node.js and Express ')
+  .step(data-file='index.js')
+    :markdown
+      ## What does this thing do?
+
+      This [Laravel](http://laravel.com/) web application shows
+      how you can use Twilio to track the effectiveness of different
+      marketing channels.
+
+      This application has three main features:
+
+      - It purchases phone numbers from Twilio to use in different marketing
+      campaigns (like a billboard or a bus advertisement)
+      - It forwards incoming calls for those phone numbers to a salesperson
+      - It displays charts showing data about the phone numbers and the calls
+      they receive
+
+      In this tutorial, we'll point out the key bits of code that make
+      this application work.  [Check out the project README on
+      GitHub](https://github.com/twiliodeved/call-tracking-laravel) to
+      see how to run the code yourself.
+
+      Let's get started! Click the right arrow above to advance to the next
+      code snippet.
+
+      ---
+
+      **See also:**
+
+      * [Twilio PHP Helper Library](https://github.com/twilio/twilio-php/)
+      * [Twilio REST API docs](https://www.twilio.com/docs/api)
+      * [Laravel documentation](http://laravel.com/docs/5.1)
+      * [What is Call Tracking?](http://www.searchenginejournal.com/seo-beginner-guide-call-tracking-care/83173/)
+
+  .step(data-file='index.js')
+    :markdown
+      ## Search for available phone numbers
+
+      Call tracking requires us to search for and buy phone numbers on
+      demand, associating a specific phone number with a lead
+      source. We make a server-side request (possibly with a filter
+      area code) asking Twilio for available phone numbers.
+
+      ---
+
+      **See also:**
+
+      * [twilio-php helper](https://twilio-php.readthedocs.org/en/latest)
+      * [Searching for numbers in twilio-php](https://twilio-php.readthedocs.org/en/latest/usage/rest/phonenumbers.html#searching-for-a-number)
+      * [Buying numbers in twilio-php](https://twilio-php.readthedocs.org/en/latest/usage/rest/phonenumbers.html#buying-a-number)
+      * [REST API: Available Phone Numbers](https://www.twilio.com/docs/api/rest/available-phone-numbers)
+
+  .step(data-file='index.js')
+    :markdown
+      ## Display available phone numbers
+
+      We display a form to the user on the app's home page which
+      allows them to search for a new phone number by area code. We
+      make a request (possibly with a filter area code) through the
+      application's backend asking Twilio for available phone
+      numbers. We also define a form that can be used to buy a
+      specific number
+
+      ---
+
+      **See also:**
+
+      * [The Blade templating engine](http://laravel.com/docs/5.1/blade)
+      * [Laravel Collective: Forms & Html](http://laravelcollective.com/docs/5.1/html)
+
+
+  .step(data-file='index.js')
+    :markdown
+      ## Buy a phone number
+
+      The `store` endpoint for the LeadSource resource expects a phone
+      number as a parameter and purchases a number through Twilio's
+      API on behalf of this application's user. It enables the caller
+      ID feature and associates the number to the current TwiML app
+      SID. It immediately redirects the user so she can add a
+      forwarding number and a description for the lead source.
+
+      Next, we'll how this is done.
+
+      ---
+
+      **See also:**
+
+      * [Buying numbers in twilio-php](https://twilio-php.readthedocs.org/en/latest/usage/rest/phonenumbers.html#buying-a-number)
+      * [Twilio REST API: Available Phone Numbers](https://www.twilio.com/docs/api/rest/available-phone-numbers)
+
+  .step(data-file='app/Http/Controllers/LeadSourceController.php', data-highlight='60-74')
+    :markdown
+      ## Associate a phone number with a lead source
+
+      Once we have bought a number we display a form so the user can
+      add a forwarding number and a description for this number. From
+      now on, any call to this number will be attributed to this
+      source. All phone numbers should be in E.164 format.
+
+      ---
+
+      **See also:**
+
+      * [Laravel Collective Forms](http://laravelcollective.com/docs/5.1/html#opening-a-form)
+      * [Laravel redirects](http://laravel.com/docs/5.1/responses#redirects)
+      * [E.164 format](https://en.wikipedia.org/wiki/E.164)
+
+  .step(data-file='app/LeadSource.php')
+    :markdown
+      ## The LeadSource model
+
+      This is the model that contains the information provided in the
+      form from the previous step. The `LeadSource` model associates a
+      Twilio number to a named lead source (like "Wall Street Journal
+      Ad" or "Dancing guy with sign"). It also tracks a phone number
+      to which we'd like all the calls redirected, like your sales or
+      support help line.  It also provides a convenience method to
+      find leads associated to this lead source
+
+      ---
+
+      **See also:**
+
+      * [Eloquent models](http://laravel.com/docs/5.1/eloquent)
+      * [Eloquent hasMany](http://laravel.com/api/5.1/Illuminate/Database/Eloquent/Model.html#method_hasMany)
+
+  .step(data-file='app/Lead.php', data-highlight='9-16')
+    :markdown
+      ## The Lead model
+
+      A `Lead` represents a phone call generated by a
+      `LeadSource`. Each time somebody calls a phone number associated
+      with a `LeadSource`, we'll use the `Lead` model to record some
+      of the [data Twilio gives
+      us](https://www.twilio.com/docs/api/twiml/twilio_request) about
+      their call.
+
+      ---
+
+      **See also:**
+
+      * [Eloquent belongsTo](http://laravel.com/api/5.1/Illuminate/Database/Eloquent/Model.html#method_belongsTo)
+
+  .step(data-file='app/Http/Controllers/LeadController.php', data-highlight='36-56')
+    :markdown
+      ## Forward calls and create leads
+
+      Whenever a customer calls one of our Twilio numbers, Twilio will
+      send a POST request to the URL associated with this view
+      function (should be `/lead`).
+
+      We use the incoming call data to create a new `Lead` for a
+      `LeadSource`, then return
+      [TwiML](https://www.twilio.com/docs/api/twiml) that connects our
+      caller with the `forwarding_number` of our `LeadSource`.
+
+      ---
+
+      **See also:**
+
+      * [Twilio voice request parameters](https://www.twilio.com/docs/api/twiml/twilio_request)
+      * [Excluding URIs from CSRF protection](http://laravel.com/docs/5.1/routing#csrf-excluding-uris)
+      * [TwiML creation with twilio-php](https://twilio-php.readthedocs.org/en/latest/usage/twiml.html)
+      * [TwiML <Dial> verb](https://www.twilio.com/docs/api/twiml/dial)
+
+  .step(data-file='app/Lead.php', data-highlight='18-50')
+    :markdown
+      ## Get statistics about our lead sources
+
+      One useful statistic we can get from our data is how many calls
+      each `LeadSource` has received. We might also want to know the
+      cities the leads are coming from. For this we define two
+      Eloquent queries.
+      ---
+
+      **See also:**
+
+      * [Eloquent: Querying Relations](http://laravel.com/docs/5.1/eloquent-relationships#querying-relations)
+
+  .step(data-file='public/js/pieCharts.js')
+    :markdown
+      ## Visualize our statistics with Chart.js
+
+      Back on the home page, we fetch call tracking statistics [in
+      JSON from the
+      server](http://laravel.com/docs/5.1/responses#json-responses)
+      using [jQuery](https://api.jquery.com/jquery.get/).  We display
+      the stats in colorful pie charts we create with
+      [Chart.js](http://www.chartjs.org/).
+
+  .step(data-file='app/Http/Controllers/LeadController.php', data-highlight='36-56')
+    :markdown
+      ## Where to next?
+
+      That's it! Our Laravel application is now ready to purchase new phone
+      numbers, forward incoming calls, and record some statistics for our
+      business. 
+
+      If you're a PHP developer working with Twilio, you might also enjoy these
+      tutorials:
+
+      [**Click-To-Call (Laravel)**](https://www.twilio.com/docs/howto/walkthrough/click-to-call/php/laravel)
+
+      Put a button on your web page that connects visitors to live support or sales people via telephone.
+
+      [**Appointment Reminders (Laravel)**](https://www.twilio.com/docs/howto/walkthrough/appointment-reminders/php/laravel)
+
+      Send your customers automatic reminders ahead of appoiments using Twilio
+      SMS.
+
+      Thanks for checking out this tutorial! If you have any feedback to share
+      with us, we'd love to hear it. Tweet [@twilio](https://twitter.com/twilio)
+      to let us know what you think.
