@@ -98,8 +98,9 @@ source. All phone numbers should be in E.164 format.</p>
 form from the previous step. The <code>LeadSource</code> model associates a
 Twilio number to a named lead source (like &quot;Wall Street Journal
 Ad&quot; or &quot;Dancing guy with sign&quot;). It also tracks a phone number
-to which we&#39;d like all the calls redirected, like your sales or</p>
-<h2 id="support-help-line-">support help line.</h2>
+to which we&#39;d like all the calls redirected, like your sales or
+support help line.</p>
+<hr>
 <p><strong>See also:</strong></p>
 <ul>
 <li><a href="http://mongoosejs.com/docs/models.html">Mongoose models</a></li>
@@ -137,8 +138,10 @@ caller with the <code>forwarding_number</code> of our <code>LeadSource</code>.</
 </ul>
 </div><div data-file="controllers/leads.js" data-highlight="32-53" class="step"><h2 id="get-statistics-about-our-lead-sources">Get statistics about our lead sources</h2>
 <p>One useful statistic we can get from our data is how many calls
-each <code>LeadSource</code> has received. We might also want to know the</p>
-<h2 id="cities-the-leads-are-coming-from-for-this-we-define-two-functions-">cities the leads are coming from. For this we define two functions.</h2>
+each <code>LeadSource</code> has received. We might also want to know the
+cities the leads are coming from. For this we define two
+functions which will be mapped to routes the frontend can call.</p>
+<hr>
 <p><strong>See also:</strong></p>
 <ul>
 <li><a href="http://mongoosejs.com/docs/populate.html">Mongoose population</a></li>
@@ -151,6 +154,10 @@ from the server using
 <a href="https://api.jquery.com/jquery.get/">jQuery</a>.  We display the
 stats in colorful pie charts we create with
 <a href="http://www.chartjs.org/">Chart.js</a>.</p>
+<p><strong>See also:</strong></p>
+<ul>
+<li><a href="http://underscorejs.org/">Underscore.js</a></li>
+</ul>
 </div><div data-file="index.js" class="step"><h2 id="where-to-next-">Where to next?</h2>
 <p>That&#39;s it! Our Express.js application is now ready to purchase new phone
 numbers, forward incoming calls, and record some statistics for our
