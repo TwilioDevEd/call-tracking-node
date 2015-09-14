@@ -4,8 +4,10 @@ var leads = require('./leads');
 var dashboard = require('./dashboard');
 
 // Map routes to controller functions
-module.exports.webRoutes = function(router) {
-  router.get('/', function(req, resp) { return resp.redirect(302, '/dashboard'); });
+exports.webRoutes = function(router) {
+  router.get('/', function(req, resp) { 
+    return resp.redirect(302, '/dashboard'); 
+  });
   router.get('/available-numbers', availableNumbers.index);
   router.post('/lead-source', leadSources.create);
   router.get('/lead-source/:id/edit', leadSources.edit);
@@ -15,6 +17,6 @@ module.exports.webRoutes = function(router) {
   router.get('/lead/summary-by-city', leads.leadsByCity);
 };
 
-module.exports.webhookRoutes = function(router) {
+exports.webhookRoutes = function(router) {
   router.post('/lead', leads.create);
 };

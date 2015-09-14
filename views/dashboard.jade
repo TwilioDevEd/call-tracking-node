@@ -1,11 +1,13 @@
 extends layout
 
 block content
-  h2 Call tracking
+  h2 Call Tracking
   .row
     .col-lg-4
       h3 Add a new number
-      p Create a new lead source by purchasing a new phone number. Area code is optional
+      p.
+        Create a new lead source by purchasing a new phone number. 
+        Area code is optional
 
       form(name='searchNumbers', action='/available-numbers', method='GET')
         .form-group
@@ -15,7 +17,9 @@ block content
 
       hr
       h3 Lead sources
-      a.btn.btn-sm.btn-default(href='https://www.twilio.com/user/account/apps/' + '#{appSid}') App configuration
+      a.btn.btn-sm.btn-default(
+          href='https://www.twilio.com/user/account/apps/' + '#{appSid}'
+          target='_blank') App configuration
       table.table#leadSources
         thead
           tr
@@ -30,17 +34,18 @@ block content
               td #{leadSource.description}
               td #{leadSource.forwardingNumber}
               td
-                a.btn.btn-xs.btn-default(href= '/lead-source/' + '#{leadSource._id}' + '/edit') Edit
+                a.btn.btn-xs.btn-default(
+                  href= '/lead-source/' + '#{leadSource._id}' + '/edit') Edit
 
-    h3 Charts
-    p The latest statistics about how the lead sources are performing
     .col-lg-4
       h3 Calls by lead source
       p The number of incoming calls each lead source has received
       canvas#pie-by-lead-source
     .col-lg-4
       h3 Calls by city
-      p The number of incoming calls from different cities, based on Twilio call data
+      p.
+        The number of incoming calls from different cities, based on Twilio call 
+        data
       canvas#pie-by-city
 
 block scripts

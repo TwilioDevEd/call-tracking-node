@@ -11,12 +11,6 @@ if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
 // HTTP Port to run our web application
 cfg.port = process.env.PORT || 3000;
 
-// HTTP Basic auth config, for light weight security on our demo app
-cfg.basic = {
-  username: process.env.HTTP_BASIC_USERNAME || 'admin',
-  password: process.env.HTTP_BASIC_PASSWORD || 'password'
-};
-
 // A random string that will help generate secure one-time passwords and
 // HTTP sessions
 cfg.secret = process.env.APP_SECRET || 'keyboard cat';
@@ -30,6 +24,8 @@ cfg.secret = process.env.APP_SECRET || 'keyboard cat';
 cfg.accountSid = process.env.TWILIO_ACCOUNT_SID;
 cfg.authToken = process.env.TWILIO_AUTH_TOKEN;
 
+// Read in a TwiML app SID from the system environment, or create one to use
+// in this application
 twimlApp.getTwimlAppSid('Call tracking app').then(function(appSid) {
   console.log('Working with TwiML App SID: ');
   console.log(appSid);
@@ -41,14 +37,20 @@ twimlApp.getTwimlAppSid('Call tracking app').then(function(appSid) {
 // MONGOLAB_URI is for the MongoLab add-on for Heroku deployment
 cfg.mongoUrl = process.env.MONGOLAB_URI || process.env.MONGO_URL;
 
-var configured = [cfg.accountSid, cfg.authToken, cfg.mongoUrl].every(function(configValue) {
+// Ensure all required configuration is set
+var configured = [
+  cfg.accountSid, 
+  cfg.authToken, 
+  cfg.mongoUrl
+].every(function(configValue) {
   if (configValue) {
     return true;
   }
 });
 
 if (!configured) {
-  throw new Error('TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, and MONGO_URL must be set');
+  var s = 'TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, and MONGO_URL must be set';
+  throw new Error(s);
 }
 
 // Export configuration object

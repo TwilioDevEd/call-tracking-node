@@ -28,12 +28,17 @@ This should install all of our project dependencies from npm into a local
 
 ### Configuration
 
-Next, open `.env.sample` at the root of the project and update it with values
-from your
-[Twilio account](https://www.twilio.com/user/account/voice-messaging)
-and local configuration. Save the file as `.env`. At
-the very least you'll need to set `TWILIO_AUTH_TOKEN`,
-`TWILIO_ACCOUNT_SID` and `MONGO_URL`.
+This application is configured using [dotenv](https://www.npmjs.com/package/dotenv).
+Begin by copying the sample .env file to use in this application:
+
+```bash
+cp .env.sample .env
+```
+
+Next, open the `.env` at the root of the project and update it with credentials
+from your [Twilio account](https://www.twilio.com/user/account/voice-messaging)
+and local configuration. You will also need to set `MONGO_URL`, which is how we
+will connect to our database.
 
 This sample application stores data in a MongoDB database using 
 [Mongoose](http://mongoosejs.com/). You can download and run MongoDB 
@@ -41,8 +46,7 @@ yourself ([OS X](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x
 [Linux](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/), 
 [Windows](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-windows/)), 
 or you can use a hosted service like
-[compose.io](https://www.compose.io/). If you're running Mongo locally
-`MONGO_URL` can be set to something like `mongodb://localhost/call-tracking`.
+[compose.io](https://www.compose.io/).
 
 On OS X, the maybe the easiest way to get MongoDB running locally is to install
 via [Homebrew](http://brew.sh/).
@@ -58,8 +62,8 @@ mongod
 ```
 
 By default, there will be a local database running that's not password protected.
-To connect to MongoDB, you'll need a [connection string](http://mongoosejs.com/docs/connections.html) 
-to use with Mongoose.
+In your `.env` file, set `MONGO_URL` to `mongodb://127.0.0.1/calltracking`. You
+should now be all set to run the app locally!
 
 ### Running the Project
 
