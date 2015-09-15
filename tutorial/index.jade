@@ -1,5 +1,5 @@
 .chapter(data-title='Call Tracking with Twilio, Node.js and Express ')
-  .step(data-file='webapp.js')
+  .step(data-file='index.js')
     :markdown
       ## What does this thing do?
 
@@ -14,8 +14,6 @@
       - It forwards incoming calls for those phone numbers to a salesperson
       - It displays charts showing data about the phone numbers and the calls
       they receive
-
-      The application uses MongoDB together with Mongoose as the persistence layer.
 
       In this tutorial, we'll point out the key bits of code that make
       this application work.  [Check out the project README on
@@ -74,18 +72,16 @@
       * [Usings template engines with Express](http://expressjs.com/guide/using-template-engines.html)
 
 
-  .step(data-file='controllers/leadSources.js', data-highlight='5-27')
+  .step(data-file='controllers/leadSources.js', data-highlight='5-25')
     :markdown
       ## Buy a phone number
 
       The `create` function for the LeadSource resource expects a phone
       number as a parameter and purchases a number through Twilio's
       API on behalf of this application's user. It enables the caller
-      ID feature and associates the number to the current TwiML app
+      ID feature and associates the number with the current TwiML app
       SID. It immediately redirects the user so she can add a
       forwarding number and a description for the lead source.
-
-      Next, we'll how this is done.
 
       ---
 
@@ -95,7 +91,7 @@
       * [Twilio Node examples](http://twilio.github.io/twilio-node/#moreexamples)
       * [Save models with Mongoose](http://mongoosejs.com/docs/api.html#model_Model-save)
 
-  .step(data-file='controllers/leadSources.js', data-highlight='49-74')
+  .step(data-file='controllers/leadSources.js', data-highlight='42-64')
     :markdown
       ## Associate a phone number with a lead source
 
@@ -151,7 +147,7 @@
       * [Mongoose populate](http://mongoosejs.com/docs/populate.html)
       * [Mongoose schema types](http://mongoosejs.com/docs/schematypes.html)
 
-  .step(data-file='controllers/leads.js', data-highlight='8-30')
+  .step(data-file='controllers/leads.js', data-highlight='8-32')
     :markdown
       ## Forward calls and create leads
 
@@ -172,14 +168,14 @@
       * [TwiML basics with twilio-node](http://twilio.github.io/twilio-node/#twimlBasic)
       * [TwiML <Dial> verb](https://www.twilio.com/docs/api/twiml/dial)
 
-  .step(data-file='controllers/leads.js', data-highlight='32-53')
+  .step(data-file='controllers/leads.js', data-highlight='34-51')
     :markdown
       ## Get statistics about our lead sources
 
       One useful statistic we can get from our data is how many calls
       each `LeadSource` has received. We might also want to know the
       cities the leads are coming from. For this we define two
-      functions which will be mapped to routes the frontend can call.
+      functions which will be mapped to routes the front-end can call.
 
       ---
 
@@ -197,13 +193,11 @@
       from the server using
       [jQuery](https://api.jquery.com/jquery.get/).  We display the
       stats in colorful pie charts we create with
-      [Chart.js](http://www.chartjs.org/).
+      [Chart.js](http://www.chartjs.org/). We also use some utility functions
+      from [Underscore.js](http://underscorejs.org/) to munge the data from
+      our back-end.
 
-      **See also:**
-
-      * [Underscore.js](http://underscorejs.org/)
-
-  .step(data-file='index.js')
+  .step
     :markdown
       ## Where to next?
 
