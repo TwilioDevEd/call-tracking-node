@@ -7,6 +7,8 @@
       how you can use Twilio to track the effectiveness of different
       marketing channels.
 
+      ![//howtodocs.s3.amazonaws.com/call-tracking-home.png](//howtodocs.s3.amazonaws.com/call-tracking-home.png)
+
       This application has three main features:
 
       - It purchases phone numbers from Twilio to use in different marketing
@@ -40,8 +42,8 @@
 
       Call tracking requires us to search for and buy phone numbers on
       demand, associating a specific phone number with a lead
-      source. We make a server-side request (possibly with a filter
-      area code) asking Twilio for available phone numbers.
+      source. From the dashboard, the user can search for new numbers, optionally
+      filtering by area code.
 
       ---
 
@@ -56,12 +58,9 @@
     :markdown
       ## Display available phone numbers
 
-      We display a form to the user on the app's home page which
-      allows them to search for a new phone number by area code. We
-      make a request (possibly with a filter area code) through the
-      application's backend asking Twilio for available phone
-      numbers. We also define a form that can be used to buy a
-      specific number
+      After a user searches for phone numbers from the dashboard, we display a
+      list of numbers that are currently available for purchase. Submitting one
+      of the forms generated for a number will buy that phone number.
 
       ---
 
@@ -69,7 +68,7 @@
 
       * [Jade template engine](http://jade-lang.com/)
       * [Jade language reference](http://jade-lang.com/reference/)
-      * [Usings template engines with Express](http://expressjs.com/guide/using-template-engines.html)
+      * [Using template engines with Express](http://expressjs.com/guide/using-template-engines.html)
 
 
   .step(data-file='controllers/leadSources.js', data-highlight='5-25')
@@ -77,7 +76,7 @@
       ## Buy a phone number
 
       The `create` function for the LeadSource resource expects a phone
-      number as a parameter and purchases a number through Twilio's
+      number as a parameter, and purchases a number through Twilio's
       API on behalf of this application's user. It enables the caller
       ID feature and associates the number with the current TwiML app
       SID. It immediately redirects the user so she can add a

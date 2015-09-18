@@ -13,6 +13,7 @@
 <p>This <a href="http://expressjs.com/">Express.js</a> web application shows
 how you can use Twilio to track the effectiveness of different
 marketing channels.</p>
+<p><img src="//howtodocs.s3.amazonaws.com/call-tracking-home.png" alt="//howtodocs.s3.amazonaws.com/call-tracking-home.png"></p>
 <p>This application has three main features:</p>
 <ul>
 <li>It purchases phone numbers from Twilio to use in different marketing
@@ -40,8 +41,8 @@ code snippet.</p>
 </div><div data-file="controllers/availableNumbers.js" class="step"><h2 id="search-for-available-phone-numbers">Search for available phone numbers</h2>
 <p>Call tracking requires us to search for and buy phone numbers on
 demand, associating a specific phone number with a lead
-source. We make a server-side request (possibly with a filter
-area code) asking Twilio for available phone numbers.</p>
+source. From the dashboard, the user can search for new numbers, optionally
+filtering by area code.</p>
 <hr>
 <p><strong>See also:</strong></p>
 <ul>
@@ -51,22 +52,19 @@ area code) asking Twilio for available phone numbers.</p>
 <li><a href="https://www.twilio.com/docs/api/rest/available-phone-numbers">REST API: Available Phone Numbers</a></li>
 </ul>
 </div><div data-file="views/availableNumbers.jade" class="step"><h2 id="display-available-phone-numbers">Display available phone numbers</h2>
-<p>We display a form to the user on the app&#39;s home page which
-allows them to search for a new phone number by area code. We
-make a request (possibly with a filter area code) through the
-application&#39;s backend asking Twilio for available phone
-numbers. We also define a form that can be used to buy a
-specific number</p>
+<p>After a user searches for phone numbers from the dashboard, we display a
+list of numbers that are currently available for purchase. Submitting one
+of the forms generated for a number will buy that phone number.</p>
 <hr>
 <p><strong>See also:</strong></p>
 <ul>
 <li><a href="http://jade-lang.com/">Jade template engine</a></li>
 <li><a href="http://jade-lang.com/reference/">Jade language reference</a></li>
-<li><a href="http://expressjs.com/guide/using-template-engines.html">Usings template engines with Express</a></li>
+<li><a href="http://expressjs.com/guide/using-template-engines.html">Using template engines with Express</a></li>
 </ul>
 </div><div data-file="controllers/leadSources.js" data-highlight="5-25" class="step"><h2 id="buy-a-phone-number">Buy a phone number</h2>
 <p>The <code>create</code> function for the LeadSource resource expects a phone
-number as a parameter and purchases a number through Twilio&#39;s
+number as a parameter, and purchases a number through Twilio&#39;s
 API on behalf of this application&#39;s user. It enables the caller
 ID feature and associates the number with the current TwiML app
 SID. It immediately redirects the user so she can add a
