@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/TwilioDevEd/call-tracking-node.svg?branch=master)](https://travis-ci.org/TwilioDevEd/call-tracking-node)
 
 This application demostrates how to use Twilio track calls and measure
-the effectiveness of marketing campaigns
+the effectiveness of marketing campaigns.  A tutorial walkthrough exists [here](https://www.twilio.com/docs/tutorials/walkthrough/call-tracking/node/express) to help with setting this up.
 
 ## Running the Project on Your Machine
 
