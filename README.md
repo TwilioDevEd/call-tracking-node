@@ -29,10 +29,10 @@ This should install all of our project dependencies from npm into a local
 ### Configuration
 
 This application is configured using [dotenv](https://www.npmjs.com/package/dotenv).
-Begin by copying the sample .env file to use in this application:
+Begin by copying the example .env file to use in this application:
 
 ```bash
-cp .env.sample .env
+cp .env.example .env
 ```
 
 Next, open the `.env` at the root of the project and update it with credentials
