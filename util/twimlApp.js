@@ -2,10 +2,9 @@ var twilio = require('twilio');
 var config = require('../config');
 var q = require('q');
 
-// Create reusable Twilio API client
-var client = twilio(config.accountSid, config.authToken);
-
 var getTwimlAppSid = function(appNameToFind) {
+  // Create reusable Twilio API client
+  var client = twilio(config.accountSid, config.authToken);
   var appName = appNameToFind || 'Call tracking app';
 
   if (process.env.TWILIO_APP_SID) {
