@@ -1,15 +1,9 @@
 var dotenv = require('dotenv');
 
-//Check .env variables to load
-if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
-  dotenv.config({path: '.env'});
-} else {
-  dotenv.config({path: '.env.test', silent: true});
-}
+dotenv.config({path: '.env'});
 
 var twimlApp = require('./util/twimlApp');
 var cfg = {};
-
 
 // HTTP Port to run our web application
 cfg.port = process.env.PORT || 3000;
@@ -42,8 +36,8 @@ cfg.mongoUrl = process.env.MONGOLAB_URI || process.env.MONGO_URL;
 
 // Ensure all required configuration is set
 var configured = [
-  cfg.accountSid, 
-  cfg.authToken, 
+  cfg.accountSid,
+  cfg.authToken,
   cfg.mongoUrl
 ].every(function(configValue) {
   if (configValue) {
