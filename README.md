@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/TwilioDevEd/call-tracking-node.svg?branch=master)](https://travis-ci.org/TwilioDevEd/call-tracking-node)
 
 This application demostrates how to use Twilio track calls and measure
-the effectiveness of marketing campaigns
+the effectiveness of marketing campaigns.  A tutorial walkthrough exists [here](https://www.twilio.com/docs/tutorials/walkthrough/call-tracking/node/express) to help with setting this up.
 
 ## Running the Project on Your Machine
 
@@ -26,13 +26,23 @@ npm install
 This should install all of our project dependencies from npm into a local 
 `node_modules` folder.
 
+### Create a TwiML App
+
+This project is configured to use a **TwiML App**, which allows us to easily set the voice URLs for all Twilio phone numbers we purchase in this app.
+
+Create a new TwiML app at https://www.twilio.com/user/account/apps/add and use its `Sid` as the `TWIML_APP_SID` environment variable wherever you run this app.
+
+![Creating a TwiML App](http://howtodocs.s3.amazonaws.com/call-tracking-twiml-app.gif)
+
+See the end of the "Exposing Webhooks to Twilio" section for details on the exact URL to use in your TwiML app.
+
 ### Configuration
 
 This application is configured using [dotenv](https://www.npmjs.com/package/dotenv).
-Begin by copying the sample .env file to use in this application:
+Begin by copying the example .env file to use in this application:
 
 ```bash
-cp .env.sample .env
+cp .env.example .env
 ```
 
 Next, open the `.env` at the root of the project and update it with credentials
