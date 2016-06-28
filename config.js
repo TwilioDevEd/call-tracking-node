@@ -1,12 +1,15 @@
 var dotenv = require('dotenv');
-var twimlApp = require('./util/twimlApp');
-var cfg = {};
 
+//Check .env variables to load
 if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
   dotenv.config({path: '.env'});
 } else {
   dotenv.config({path: '.env.test', silent: true});
 }
+
+var twimlApp = require('./util/twimlApp');
+var cfg = {};
+
 
 // HTTP Port to run our web application
 cfg.port = process.env.PORT || 3000;
