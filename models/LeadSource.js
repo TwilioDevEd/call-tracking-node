@@ -2,11 +2,11 @@ var mongoose = require('mongoose');
 
 var LeadSourceSchema = new mongoose.Schema({
   number: {
-    type: String, 
+    type: String,
     required: true
   },
   description: {
-    type: String, 
+    type: String,
     required: false
   },
   forwardingNumber: {
@@ -14,6 +14,8 @@ var LeadSourceSchema = new mongoose.Schema({
     required: false
   }
 });
+
+delete mongoose.models.LeadSource
 
 // Create a Mongoose model from our schema
 var LeadSource = mongoose.model('LeadSource', LeadSourceSchema);

@@ -2,30 +2,32 @@ var mongoose = require('mongoose');
 
 var LeadSchema = new mongoose.Schema({
   callerNumber: {
-    type: String, 
+    type: String,
     required: true
   },
   callSid: {
-    type: String, 
+    type: String,
     required: true
   },
   leadSource: {
-    type: mongoose.Schema.Types.ObjectId, 
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'LeadSource'
   },
   city: {
-    type: String, 
+    type: String,
     required: false
   },
   state: {
-    type: String, 
+    type: String,
     required: false
   },
   callerName: {
-    type: String, 
+    type: String,
     required: false
   }
 });
+
+delete mongoose.models.Lead
 
 // Create a Mongoose model from our schema
 var Lead = mongoose.model('Lead', LeadSchema);
