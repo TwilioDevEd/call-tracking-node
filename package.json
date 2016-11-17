@@ -4,7 +4,7 @@
   "description": "Call tracking using Twilio, TwiML and Express.js",
   "main": "index.js",
   "scripts": {
-    "test": "export NODE_ENV=test && mocha test"
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha --timeout 4000 test"
   },
   "repository": {
     "type": "git",
