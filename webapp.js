@@ -7,6 +7,9 @@ var flash = require('connect-flash');
 var morgan = require('morgan');
 var csurf = require('csurf');
 var config = require('./config');
+var mongoose = require('mongoose');
+
+mongoose.Promise = Promise;
 
 // Create Express web app
 var app = express();
