@@ -51,7 +51,7 @@ First you need to install
 
 1. Run the application.
     ```
-    node ./bin/www
+    npm start
     ```
     Alternatively you might also consider using [nodemon](https://github.com/remy/nodemon) for this. It works just like
     the node command, but automatically restarts your application when you change any source code files.
@@ -59,11 +59,6 @@ First you need to install
     ```
     npm install -g nodemon
     nodemon ./bin/www
-    ```
-
-1. Run the application.
-    ```
-    $ npm start
     ```
 
 1. To actually forward incoming calls, your development server will need to be publicly accessible. [We recommend using ngrok to solve this problem](https://www.twilio.com/blog/2015/09/6-awesome-reasons-to-use-ngrok-when-testing-webhooks.html).
