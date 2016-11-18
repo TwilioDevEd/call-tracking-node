@@ -25,7 +25,7 @@ exports.create = function(request, response) {
     return newLead.save()
     .then(function() {
       response.send(twiml.toString());
-    })
+    });
   }).catch(function(err) {
     console.log('Failed to forward call:');
     console.log(err);
