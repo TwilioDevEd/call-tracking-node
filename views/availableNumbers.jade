@@ -16,6 +16,6 @@ block content
               td= number.region
               td
                 form(name='purchaseNumber', action='/lead-source', method='POST')
-                  input(type='hidden', name='phoneNumber', value="#{number.phone_number}")
+                  input(type='hidden', name='phoneNumber', value="#{number.phoneNumber}")
                   input(type='hidden', name='_csrf', value="#{csrftoken}")
                   input(type='submit', value='Purchase').btn.btn-sm.btn-primary
