@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start":"node index",
-    "test": "NODE_ENV=test ./node_modules/.bin/mocha --timeout 4000 test"
+    "test": "NODE_ENV=test TWILIO_APP_SID=ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX TWILIO_AUTH_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX TWILIO_ACCOUNT_SID=ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX MONGO_URL=mongodb://localhost:27017/test ./node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",

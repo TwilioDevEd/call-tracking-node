@@ -6,8 +6,6 @@ services: mongodb
 env:
   global:
   - CXX: g++-4.8
-  - TWILIO_APP_SID: somenotr3al4pps1dgoeshere
-  - MONGO_URL: mongodb://localhost/call-tracking
 addons:
   apt:
     sources:
