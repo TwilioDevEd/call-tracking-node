@@ -13,7 +13,6 @@ exports.create = function(request, response) {
   }).then(function(foundLeadSource) {
     var twiml = new twilio.TwimlResponse();
     twiml.dial(foundLeadSource.forwardingNumber);
-    response.send(twiml.toString());
 
     var newLead = new Lead({
       callerNumber: request.body.From,
@@ -23,8 +22,10 @@ exports.create = function(request, response) {
       state: request.body.FromState,
       callerName: request.body.CallerName
     });
-
-    return newLead.save();
+    return newLead.save()
+    .then(function() {
+      response.send(twiml.toString());
+    });
   }).catch(function(err) {
     console.log('Failed to forward call:');
     console.log(err);

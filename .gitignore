@@ -31,4 +31,3 @@ node_modules
 
 # Development/test local configuration
 .env
-.env.test
