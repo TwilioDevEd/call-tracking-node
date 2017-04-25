@@ -1,4 +1,4 @@
-var twilio = require('twilio');
+var VoiceResponse = require('twilio/lib/twiml/VoiceResponse');
 var _ = require('underscore');
 
 var LeadSource = require('../models/LeadSource');
@@ -11,7 +11,7 @@ exports.create = function(request, response) {
   LeadSource.findOne({
     number: leadSourceNumber
   }).then(function(foundLeadSource) {
-    var twiml = new twilio.TwimlResponse();
+    var twiml = new VoiceResponse();
     twiml.dial(foundLeadSource.forwardingNumber);
 
     var newLead = new Lead({
