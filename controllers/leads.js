@@ -1,4 +1,4 @@
-var twilio = require('twilio');
+var VoiceResponse = require('twilio').twiml.VoiceResponse;
 var _ = require('underscore');
 
 var LeadSource = require('../models/LeadSource');
@@ -11,9 +11,8 @@ exports.create = function(request, response) {
   LeadSource.findOne({
     number: leadSourceNumber
   }).then(function(foundLeadSource) {
-    var twiml = new twilio.TwimlResponse();
+    var twiml = new VoiceResponse();
     twiml.dial(foundLeadSource.forwardingNumber);
-    response.send(twiml.toString());
 
     var newLead = new Lead({
       callerNumber: request.body.From,
@@ -23,8 +22,10 @@ exports.create = function(request, response) {
       state: request.body.FromState,
       callerName: request.body.CallerName
     });
-
-    return newLead.save();
+    return newLead.save()
+    .then(function() {
+      response.send(twiml.toString());
+    });
   }).catch(function(err) {
     console.log('Failed to forward call:');
     console.log(err);

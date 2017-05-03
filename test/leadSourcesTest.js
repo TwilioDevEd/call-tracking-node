@@ -3,8 +3,7 @@ require('./testHelper');
 var cheerio = require('cheerio');
 var supertest = require('supertest');
 var expect = require('chai').expect;
-var vcr = require('nock-vcr-recorder-mocha');
-
+var nock = require('nock');
 var app = require('../webapp');
 var config = require('../config');
 var LeadSource = require('../models/LeadSource');
@@ -19,11 +18,17 @@ describe('Lead sources controllers', function() {
   });
 
   describe('POST /lead-source', function() {
-    vcr.it('saves the number after purchase', function(done) {
+    it('saves the number after purchase', function() {
       var agent = supertest(app);
-      var phoneNumberToPurchase = '+12568417192';
+      var phoneNumberToPurchase = '+13153640102';
 
-      agent
+      nock('https://api.twilio.com')
+        .post(`/2010-04-01/Accounts/${process.env.TWILIO_ACCOUNT_SID}/IncomingPhoneNumbers.json`)
+        .reply(200, {
+          phone_number: phoneNumberToPurchase,
+        });
+
+      return agent
         .post('/lead-source')
         .type('form')
         .send({
@@ -31,14 +36,11 @@ describe('Lead sources controllers', function() {
         })
         .expect(303)
         .expect(function(response) {
-          LeadSource.findOne({number: phoneNumberToPurchase})
+          return LeadSource.findOne({number: phoneNumberToPurchase})
             .then(function(found) {
               expect(response.headers.location)
                 .to.equal('/lead-source/' + found._id + '/edit');
             });
-        })
-        .end(function(err, res) {
-          done();
         });
     });
   });

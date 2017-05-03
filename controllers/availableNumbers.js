@@ -11,7 +11,7 @@ exports.index = function(request, response) {
     areaCode: areaCode
   }).then(function(availableNumbers) {
     response.render('availableNumbers', {
-      availableNumbers: availableNumbers.availablePhoneNumbers
+      availableNumbers: availableNumbers
     });
   }).catch(function(failureToFetchNumbers) {
     console.log('Failed to fetch numbers from API');

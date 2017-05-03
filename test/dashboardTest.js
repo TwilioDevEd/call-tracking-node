@@ -7,6 +7,7 @@ var expect = require('chai').expect;
 var app = require('../webapp');
 var config = require('../config');
 var LeadSource = require('../models/LeadSource');
+var agent = supertest(app);
 
 describe('Dashboard controllers', function() {
   after(function(done) {
@@ -18,8 +19,7 @@ describe('Dashboard controllers', function() {
   });
 
   describe('GET /dashboard', function() {
-    it('shows a list of all lead sources', function(done) {
-
+    it('shows a list of all lead sources', function() {
       var testNumber = '+1498324783';
       var testForwardingNumber = '+1982649248';
       var testDescription = 'A description here';
@@ -30,17 +30,16 @@ describe('Dashboard controllers', function() {
         description: testDescription
       });
 
-      var saveResult = newLeadSource.save();
-      saveResult.then(function() {
-        var agent = supertest(app);
-        agent
-          .get('/dashboard')
-          .expect(function(response) {
-            expect(response.text).to.contain(testNumber);
-            expect(response.text).to.contain(testForwardingNumber);
-            expect(response.text).to.contain(testDescription);
-          })
-          .expect(200, done);
+      return newLeadSource.save()
+        .then(function() {
+          return agent
+            .get('/dashboard')
+            .expect(200)
+            .expect(function(response) {
+              expect(response.text).to.contain(testNumber);
+              expect(response.text).to.contain(testForwardingNumber);
+              expect(response.text).to.contain(testDescription);
+            });
       });
     });
   });
