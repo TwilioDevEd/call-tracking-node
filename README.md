@@ -68,11 +68,15 @@ First you need to install
     `http://88b37ada.ngrok.io/call/connect`
 
 ## Run the tests
-    You can run the tests locally by typing
+You can run the tests locally by typing
 
-    ```bash
+
+    
+    bash
     npm test
-    ```
+    
+
+    
 
 ### Try it out
 In your Twilio app configuration you'll need to set
