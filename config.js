@@ -10,7 +10,8 @@ module.exports = {
   // HTTP sessions
   secret: env.APP_SECRET || 'keyboard cat',
   accountSid: env.TWILIO_ACCOUNT_SID,
-  authToken: env.TWILIO_AUTH_TOKEN,
+  apiKey: env.TWILIO_API_KEY,
+  apiSecret: env.TWILIO_API_SECRET,
   appSid: env.TWILIO_APP_SID,
   mongoUrl: env.MONGO_URL
 };
