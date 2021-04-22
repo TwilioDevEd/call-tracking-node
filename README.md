@@ -14,16 +14,18 @@ This project is configured to use a **TwiML App**, which allows us to easily set
 
 [Create a new TwiML app](https://www.twilio.com/console/voice/twiml/apps) and use its `Sid` as the `TWILIO_APP_SID` environment variable wherever you run this app.
 
-See the end of the "Local development" section for details on the exact URL to use in your TwiML app.
-
-Once you have created your TwiML app, [configure your Twilio phone number](https://www.twilio.com/help/faq/twilio-client/how-do-i-create-a-twiml-app). If you don't have a Twilio phone number yet, you can purchase a new number in your [Twilio Account Dashboard](https://www.twilio.com/console/phone-numbers/search).
+You'll configure the exact URL to use in your TwiML app in the ["Try it out"](#try-it-out) section of this application.
 
 ## Local development
 
-First you need to install
+### Prerequisites
+
+To run this project locally, you'll need to install:
   - [Node.js](http://nodejs.org/) which should also install [npm](https://www.npmjs.com/).
   - [MongoDB](https://docs.mongodb.com/manual/administration/install-community/)
   - [ngrok](https://ngrok.com/download)
+
+### Setup
 
 1. First clone this repository and `cd` into its directory:
     ```bash
@@ -41,14 +43,14 @@ First you need to install
     ```bash
     $ cp .env.example .env
     ```
-    You can find your `TWILIO_ACCOUNT_SID` and `TWILIO_AUTH_TOKEN` in your
-    [Twilio Account Settings](https://www.twilio.com/console).
+
+    The `.env` file lists where you can find or generate the values for each required variable.
 
     Run `source .env` to export the environment variables.
 
 1. Start the MongoDB server.
 
-This app requires MongoDB to be running. See how to start the MongoDB service on [Windows](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#start-mongodb-community-edition-as-a-windows-service), [MacOS](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#run-mongodb-community-edition), or [Linux](https://docs.mongodb.com/manual/administration/install-on-linux/) (choose your Linux distribution and then see "Run MongoDB Community Edition" in the installation instructions).
+   This app requires MongoDB to be running. See how to start the MongoDB service on [Windows](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#start-mongodb-community-edition-as-a-windows-service), [MacOS](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#run-mongodb-community-edition), or [Linux](https://docs.mongodb.com/manual/administration/install-on-linux/) (choose your Linux distribution and then see "Run MongoDB Community Edition" in the installation instructions).
 
 1. Run the application.
     ```bash
@@ -63,11 +65,18 @@ This app requires MongoDB to be running. See how to start the MongoDB service on
     nodemon ./bin/www
     ```
 
-1. To actually forward incoming calls, your development server will need to be publicly accessible. [We recommend using ngrok to solve this problem](https://www.twilio.com/blog/2015/09/6-awesome-reasons-to-use-ngrok-when-testing-webhooks.html). Install [ngrok](http://ngrok.com) and then run it, exposing port 3000 (the port that your local server is running on):
+    You should now be able to visit `http://localhost:3000` on your local web browser and see a blank dashboard.
+    The app is almost ready to go!
+
+1. Start ngrok
+
+   To actually forward incoming calls, your development server will need to be publicly accessible, so that Twilio can communicate with it. [We recommend using ngrok to do this](https://www.twilio.com/blog/2015/09/6-awesome-reasons-to-use-ngrok-when-testing-webhooks.html). Install [ngrok](http://ngrok.com) and then run it, exposing port 3000 (the port that your local server is running on):
 
     ```bash
     ngrok http 3000
     ```
+
+    You will use the ngrok tunnel URL provided in the ["Try it out"](#try-it-out) step below.
 
 ## Run the tests
 
@@ -77,7 +86,7 @@ You can run the tests locally by typing
 npm test
 ```
 
-### Try it out
+## Try it out
 
 In your Twilio app configuration you'll need to set
 `http://<your-ngrok-domain>.ngrok.io/lead` as the callback URL. Open
@@ -110,7 +119,7 @@ You will then be redirected to a form where you can label the Lead Source and
 set up call forwarding. Now, when someone calls the number you have just purchased,
 it will be forwarded to the number you configure under "Forwarding number".
 
-![available numbers view](images/purchase-number.png)
+![available numbers view](images/setup-lead.png)
 
 Now, when someone calls the number you purchased and labeled, the call will display
 in your dashboard as having been generated from that specific lead.
