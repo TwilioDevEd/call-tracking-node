@@ -2,7 +2,7 @@ var http = require('http');
 var mongoose = require('mongoose');
 var config = require('./config');
 
-var connectionString = config.mongoUrl ? config.mongoUrl : "mongodb://localhost/call-tracking";
+var connectionString = config.mongoUrl || "mongodb://localhost/call-tracking";
 
 // Initialize database connection - throws if database connection can't be
 // established
