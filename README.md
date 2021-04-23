@@ -12,25 +12,26 @@ Call Tracking helps you measure the effectiveness of different marketing campaig
 
 This project is configured to use a **TwiML App**, which allows us to easily set the voice URLs for all Twilio phone numbers we purchase in this app.
 
-[Create a new TwiML app](https://www.twilio.com/console/phone-numbers/dev-tools/twiml-apps/add) and use its `Sid` as the `TWILIO_APP_SID` environment variable wherever you run this app.
+[Create a new TwiML app](https://www.twilio.com/console/voice/twiml/apps) and use its `Sid` as the `TWILIO_APP_SID` environment variable wherever you run this app.
 
-![Creating a TwiML App](http://howtodocs.s3.amazonaws.com/call-tracking-twiml-app.gif)
-
-See the end of the "Local development" section for details on the exact URL to use in your TwiML app.
-
-Once you have created your TwiML app, [configure your Twilio phone number](https://www.twilio.com/help/faq/twilio-client/how-do-i-create-a-twiml-app). If you don't have a Twilio phone number yet, you can purchase a new number in your [Twilio Account Dashboard](https://www.twilio.com/console/phone-numbers/search).
+You'll configure the exact URL to use in your TwiML app in the ["Try it out"](#try-it-out) section of this application.
 
 ## Local development
 
-First you need to install
+### Prerequisites
+
+To run this project locally, you'll need to install:
   - [Node.js](http://nodejs.org/) which should also install [npm](https://www.npmjs.com/).
-  - [MongoDB](https://www.mongodb.org/)
+  - [MongoDB](https://docs.mongodb.com/manual/administration/install-community/)
+  - [ngrok](https://ngrok.com/download)
+
+### Setup
 
 1. First clone this repository and `cd` into its directory:
     ```bash
-    git clone git@github.com:TwilioDevEd/browser-calls-node.git
+    git clone https://github.com/TwilioDevEd/call-tracking-node.git
 
-    cd browser-calls-node
+    cd call-tracking-node
     ```
 
 1. Install dependencies:
@@ -38,21 +39,24 @@ First you need to install
     npm install
     ```
 
-1. Copy the sample configuration file and edit it to match your configuration
+1. Copy the sample configuration file and edit it to match your configuration.
     ```bash
     $ cp .env.example .env
     ```
-    You can find your `TWILIO_ACCOUNT_SID` and `TWILIO_AUTH_TOKEN` in your
-    [Twilio Account Settings](https://www.twilio.com/console).
-    You will also need a `TWILIO_PHONE_NUMBER`, which you may find [here](https://www.twilio.com/console/phone-numbers/incoming).
 
-    Run `source .env` to export the environment variables
+    The `.env` file lists where you can find or generate the values for each required variable.
 
+    Run `source .env` to export the environment variables.
+
+1. Start the MongoDB server.
+
+   This app requires MongoDB to be running. See how to start the MongoDB service on [Windows](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#start-mongodb-community-edition-as-a-windows-service), [MacOS](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#run-mongodb-community-edition), or [Linux](https://docs.mongodb.com/manual/administration/install-on-linux/) (choose your Linux distribution and then see "Run MongoDB Community Edition" in the installation instructions).
 
 1. Run the application.
     ```bash
     npm start
     ```
+
     Alternatively you might also consider using [nodemon](https://github.com/remy/nodemon) for this. It works just like
     the node command, but automatically restarts your application when you change any source code files.
 
@@ -61,20 +65,29 @@ First you need to install
     nodemon ./bin/www
     ```
 
-1. To actually forward incoming calls, your development server will need to be publicly accessible. [We recommend using ngrok to solve this problem](https://www.twilio.com/blog/2015/09/6-awesome-reasons-to-use-ngrok-when-testing-webhooks.html).
+    You should now be able to visit `http://localhost:3000` on your local web browser and see a blank dashboard.
+    The app is almost ready to go!
 
-1. Once you have started ngrok, update your TwiML app's voice URL setting to use your ngrok hostname, so it will look something like this:
+1. Start ngrok
 
-    `http://88b37ada.ngrok.io/call/connect`
-
-## Run the tests
-    You can run the tests locally by typing
+   To actually forward incoming calls, your development server will need to be publicly accessible, so that Twilio can communicate with it. [We recommend using ngrok to do this](https://www.twilio.com/blog/2015/09/6-awesome-reasons-to-use-ngrok-when-testing-webhooks.html). Install [ngrok](http://ngrok.com) and then run it, exposing port 3000 (the port that your local server is running on):
 
     ```bash
-    npm test
+    ngrok http 3000
     ```
 
-### Try it out
+    You will use the ngrok tunnel URL provided in the ["Try it out"](#try-it-out) step below.
+
+## Run the tests
+
+You can run the tests locally by typing
+
+```bash
+npm test
+```
+
+## Try it out
+
 In your Twilio app configuration you'll need to set
 `http://<your-ngrok-domain>.ngrok.io/lead` as the callback URL. Open
 the application and then click the "App configuration" button.
@@ -87,6 +100,31 @@ box. There you should put the URL to the application's lead resource
 (e.g `http://<your-ngrok-domain>.ngrok.io/lead`).
 
 ![webhook configuration](images/webhook.png)
+
+You can now purchase new numbers from Twilio, associate them with a lead source,
+and set up call forwarding from the dashboard.
+
+To add a new number press the "Search" button on the main dashboard. You can optionally
+select an area code to find a number in that particular area.
+
+![phone number search](images/phone-search.png)
+
+After you click "Search", you will be shown a list of available Twilio numbers that you
+can purchase. To select and purchase a number, click the "Purchase" button next
+to any of the listed available phone numbers.
+
+![available numbers view](images/purchase-number.png)
+
+You will then be redirected to a form where you can label the Lead Source and
+set up call forwarding. Now, when someone calls the number you have just purchased,
+it will be forwarded to the number you configure under "Forwarding number".
+
+![available numbers view](images/setup-lead.png)
+
+Now, when someone calls the number you purchased and labeled, the call will display
+in your dashboard as having been generated from that specific lead.
+
+![main dashboard view](images/main-dashboard.png)
 
 ## Meta
 

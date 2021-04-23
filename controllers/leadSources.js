@@ -2,7 +2,7 @@ var twilio = require('twilio');
 var config = require('../config');
 var LeadSource = require('../models/LeadSource');
 
-var client = twilio(config.accountSid, config.authToken);
+var client = twilio(config.apiKey, config.apiSecret, { accountSid: config.accountSid });
 
 exports.create = function(request, response) {
   var phoneNumberToPurchase = request.body.phoneNumber;

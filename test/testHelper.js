@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 mongoose.Promise = Promise;
 
-var connStr = process.env.MONGO_URL
+var connStr = 'mongodb://localhost/call-tracking-testdb';
 
 var conn;
 

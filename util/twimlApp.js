@@ -3,7 +3,7 @@ var config = require('../config');
 var q = require('q');
 
 // Create reusable Twilio API client
-var client = twilio(config.accountSid, config.authToken);
+var client = twilio(config.apiKey, config.apiSecret, { accountSid: config.accountSid });
 
 var getTwimlAppSid = function(appNameToFind) {
   var appName = appNameToFind || 'Call tracking app';

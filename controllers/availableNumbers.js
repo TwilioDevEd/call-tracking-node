@@ -1,7 +1,7 @@
 var twilio = require('twilio');
 var config = require('../config');
 
-var client = twilio(config.accountSid, config.authToken);
+var client = twilio(config.apiKey, config.apiSecret, { accountSid: config.accountSid });
 
 exports.index = function(request, response) {
 

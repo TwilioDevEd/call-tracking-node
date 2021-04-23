@@ -4,8 +4,8 @@
   "description": "Call tracking using Twilio, TwiML and Express.js",
   "main": "index.js",
   "scripts": {
-    "start":"node index",
-    "test": "NODE_ENV=test TWILIO_APP_SID=ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX TWILIO_AUTH_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX TWILIO_ACCOUNT_SID=ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX MONGO_URL=mongodb://localhost:27017/test ./node_modules/.bin/mocha"
+    "start": "node index",
+    "test": "NODE_ENV=test TWILIO_APP_SID=ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX TWILIO_API_KEY=SKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX TWILIO_API_SECRET=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX TWILIO_ACCOUNT_SID=ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX ./node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",
@@ -35,7 +35,7 @@
     "express-validator": "^2.17.1",
     "http-auth": "^3.1.0",
     "jade": "^1.9.2",
-    "mongoose": "^4.1.5",
+    "mongoose": "^4.11.0",
     "morgan": "^1.5.1",
     "q": "^1.4.1",
     "sanitize-html": "^1.10.0",
