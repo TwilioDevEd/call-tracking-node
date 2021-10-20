@@ -29,11 +29,13 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.6.0
       with:
         mongodb-version: 5
+    - name: Create env file
+      run: cp .env.example .env
 
     - name: Install Dependencies
       run: npm install
