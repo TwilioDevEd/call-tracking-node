@@ -4,7 +4,7 @@
 
 # Call tracking
 
-[![Build Status](https://travis-ci.org/TwilioDevEd/call-tracking-node.svg?branch=master)](https://travis-ci.org/TwilioDevEd/call-tracking-node)
+[![Node.js CI](https://github.com/TwilioDevEd/call-tracking-node/actions/workflows/node.js.yml/badge.svg)](https://github.com/TwilioDevEd/call-tracking-node/actions/workflows/node.js.yml)
 
 Call Tracking helps you measure the effectiveness of different marketing campaigns. By assigning a unique phone number to different advertisements, you can track which ones have the best call rates and get some data about the callers themselves. For a step-by-step tutorial see [twilio docs](https://www.twilio.com/docs/tutorials/walkthrough/call-tracking/node/express) to help with setting this up.
 
