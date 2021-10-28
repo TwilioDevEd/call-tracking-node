@@ -41,7 +41,7 @@ To run this project locally, you'll need to install:
 
 1. Copy the sample configuration file and edit it to match your configuration.
     ```bash
-    $ cp .env.example .env
+    cp .env.example .env
     ```
 
     The `.env` file lists where you can find or generate the values for each required variable.
