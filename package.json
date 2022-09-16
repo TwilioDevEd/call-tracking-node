@@ -38,7 +38,7 @@
     "mongoose": "^4.11.0",
     "morgan": "^1.5.1",
     "q": "^1.4.1",
-    "sanitize-html": "^1.10.0",
+    "sanitize-html": "^2.7.2",
     "twilio": "~3.0.0-rc.16",
     "underscore": "^1.8.3"
   },
